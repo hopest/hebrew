@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/hopest/hebrew/issues"
   },
-  "homepage": "https://github.com/hopest/hebrew#readme"
+  "homepage": "https://github.com/hopest/hebrew#readme",
+  "dependencies": {
+    "express": "^4.15.3",
+    "sqlite3": "^3.1.8"
+  }
 }
