@@ -1,0 +1,144 @@
+            @font-face {
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: 400;
+                src: local('Roboto'), local('Roboto Regular'), url(fonts/roboto/Roboto-Regular.woff2) format('woff2'), url(fonts/roboto/Roboto-Regular.woff) format('woff'), url(fonts/roboto/Roboto-Regular.ttf) format('truetype');
+            }
+            
+            @font-face {
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: 500;
+                src: local('Roboto'), local('Roboto Regular'), url(fonts/roboto/Roboto-Medium.woff2) format('woff2'), url(fonts/roboto/Roboto-Medium.woff) format('woff'), url(fonts/roboto/Roboto-Medium.ttf) format('truetype');
+            }
+            
+            #view-source {
+                position: fixed;
+                display: block;
+                right: 0;
+                bottom: 0;
+                margin-right: 40px;
+                margin-bottom: 40px;
+                z-index: 900;
+            }
+            
+            .hebrew-ribbon {
+                width: 100%;
+                height: 40vh;
+                background-color: #3F51B5;
+                -webkit-flex-shrink: 0;
+                -ms-flex-negative: 0;
+                flex-shrink: 0;
+            }
+            
+            .hebrew-main {
+                -webkit-flex-shrink: 0;
+                -ms-flex-negative: 0;
+                flex-shrink: 0;
+            }
+            
+            .hebrew-header .mdl-layout__header-row {
+                padding-left: 40px;
+            }
+            
+            .hebrew-container {
+                max-width: 1600px;
+                width: calc(100% - 16px);
+                margin: 0 auto;
+            }
+            
+            .hebrew-content {
+                border-radius: 2px;
+                padding: 15px 56px;
+                margin-bottom: 80px;
+
+                
+            }
+
+.hebrew-content h4{
+    text-align: right;
+}
+
+            .hebrew-content h4  a { 
+    text-decoration: none; /* Отменяем подчеркивание у ссылки */
+   } 
+            
+            .hebrew-layout.is-small-screen .hebrew-content {
+                padding: 40px 28px;
+            }
+            
+            .hebrew-content h3 {
+                margin-top: 25px;
+            }
+            
+            .hebrew-footer {
+                padding-left: 40px;
+            }
+            
+            .hebrew-footer .mdl-mini-footer--link-list a {
+                font-size: 13px;
+            }
+            
+            .hebrew-content .rtl {
+                direction: rtl;
+            }
+            
+            .hebrew {
+                color: #006;
+                font-size: 22px;
+            }
+            
+            .unit {
+                align-items: center;
+                padding: 1em;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .ref {
+                font-size: 80%;
+                color: #dcdcdc;
+            }
+            
+            .translit {
+                color: #008b8b;
+            }
+            
+            .strongsnt {
+                color: #0092f2;
+            }
+            
+            .unit.stih {
+                flex-direction: row;
+                color: darkred;
+            }
+            
+            .unit.punct {
+                color: rgb(20, 156, 255);
+                align-self: center;
+                font-size: 24px;
+                background: rgb(255, 255, 255);
+                padding: 0px;
+            }
+            
+            .unit span {
+                height: 100%;
+                -webkit-box: 1 0 0;
+                -moz-box: 1 0 0;
+                -ms-flexbox: 1 0 0;
+                -webkit-flex: 1 0 0;
+                flex: 1 0 0;
+            }
+            
+            .heb-content--flex {
+                display: flex;
+                flex-wrap: wrap;
+                border-width: 1px;
+                border-style: solid;
+                border-color: rgb(252, 252, 252);
+                border-image: initial;
+            }
+
+            .heb-content-strong{
+                display: block;
+            }

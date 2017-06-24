@@ -1,0 +1,22 @@
+        <footer class="hebrew-footer mdl-mini-footer">
+          <div class="mdl-mini-footer--left-section">
+            <ul class="mdl-mini-footer--link-list">
+              <li><a href="#">Help</a></li>
+            </ul>
+          </div>
+          <% if(emailsVisible) {%>
+            <h5>Электронные адреса</h3>
+            <ul>
+              <% for(var i=0; i<emails.length;i++) {%>
+                <li>
+                  <%=emails[i] %>
+                </li>
+                <%} %>
+            </ul>
+          <%} %>
+    <p>Телефон:
+      <%=phone %>
+    </p>
+        </footer>
+
+ 

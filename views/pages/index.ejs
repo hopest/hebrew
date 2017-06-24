@@ -1,66 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <% include ../partials/header.ejs %>
+    <% include ../partials/header.ejs %>
 </head>
 
 <body>
+    <div class="mdl-layout__container">
+        <div class="hebrew-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100 is-upgraded" data-upgraded=",MaterialLayout">
+            <header class="mdl-layout__header is-casting-shadow">
+                <div class="mdl-layout__header-row">
+                    <span class="mdl-layout-title">Танах - в подстрочном переводе на русский язык</span>
+                    <div class="mdl-layout-spacer"></div>
+                </div>
+            </header>
+            <main class="hebrew-main mdl-layout__content">
+                <div class="hebrew-container mdl-grid">
+                    <div class="hebrew-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--12-col">
+                        <h4></h4>
+                        <div class="section rtl mdl-grid heb-content">
 
-  <% include ../partials/nav.ejs %>
+    <% bookmarks.forEach(function(bible) { %>
+                    <div class="mdl-cell mdl-cell--12-col heb-content--flex">
+                                <div class="unit stih"><%= bible.verse%></div>
+                                <div class="unit"><span class="strongs">7225</span><span class="translit">bə·rê·šîṯ</span><span class="hebrew">בְּרֵאשִׁ֖ית</span>
+                                    <span class="rus">Inthebeginning</span><span class="strongsnt">Noun</span></div>
+                                <div class="unit"><span class="strongs">1254</span><span class="translit">bā·rā</span><span class="hebrew">בָּרָ֣א</span>
+                                    <span class="rus">created</span><span class="strongsnt">Verb</span></div>
+                                <div class="unit"><span class="strongs">430</span><span class="translit">’ĕ·lō·hîm;</span><span class="hebrew">אֱלֹהִ֑ים</span>
+                                    <span class="rus">God</span><span class="strongsnt">Noun</span></div>
+                                <div class="unit"><span class="strongs">853</span><span class="translit">’êṯ</span><span class="hebrew">אֵ֥ת</span>
+                                    <span class="rus">-</span><span class="strongsnt">Acc</span></div>
+                                <div class="unit"><span class="strongs">8064</span><span class="translit">haš·šā·ma·yim</span><span class="hebrew">הַשָּׁמַ֖יִם</span>
+                                    <span class="rus">theheavens</span><span class="strongsnt">Noun</span></div>
+                                <div class="unit"><span class="strongs">853</span><span class="translit">wə·’êṯ</span><span class="hebrew">וְאֵ֥ת</span>
+                                    <span class="rus">and</span><span class="strongsnt">Acc</span></div>
+                                <div class="unit"><span class="strongs">776</span><span class="translit">hā·’ā·reṣ.</span><span class="hebrew">  .הָאָֽרֶץ׃</span>
+                                    <span class="rus">theearth</span><span class="strongsnt">Noun</span></div>
+                                <div class="unit punct">.</div>
+                            </div>
 
-<div class="jumbotron text-center">
-  <div class="container">
-    <a href="/" class="lang-logo">
-      <img src="/lang-logo.png">
-    </a>
-    <h1>Привет Started with Node on Heroku v1.0 dev branch</h1>
-    <p>This is a sample Node application deployed to Heroku. It's a reasonably simple app - but a good foundation for understanding how to get the most out of the Heroku platform.</p>
-    <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"><span class="glyphicon glyphicon-flash"></span> Getting Started with Node</a>
-    <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/node-js-getting-started"><span class="glyphicon glyphicon-download"></span> Source on GitHub</a>
-  </div>
-</div>
-<div class="container">
-  <div class="alert alert-info text-center" role="alert">
-    To deploy your own copy, and learn the fundamentals of the Heroku platform, head over to the <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs" class="alert-link">Getting Started with Node on Heroku</a> tutorial.
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-info-sign"></span> How this sample app works</h3>
-      <ul>
-        <li>This app was deployed to Heroku, either using Git or by using <a href="https://github.com/heroku/node-js-getting-started">Heroku Button</a> on the repository.</li>
+    <% }); %>
 
-        <li>When Heroku received the source code, it fetched all the dependencies in the <a href="https://github.com/heroku/node-js-getting-started/blob/master/package.json">package.json</a>, creating a deployable slug.</li>
-        <li>The platform then spins up a dyno, a lightweight container that provides an isolated environment in which the slug can be mounted and executed.</li>
-        <li>You can scale your app, manage it, and deploy over <a href="https://addons.heroku.com/">150 add-on services</a>, from the Dashboard or CLI.</li>
-      </ul>
-    </div>
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>
-      <ul>
-        <li>If you are following the <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs">Getting Started</a> guide, then please head back to the tutorial and follow the next steps!</li>
-        <li>If you deployed this app by deploying the Heroku Button, then in a command line shell, run:</li>
-        <ul>
-          <li><code>git clone https://github.com/heroku/node-js-getting-started.git</code> - this will create a local copy of the source code for the app</li>
-          <li><code>cd node-js-getting-started</code> - change directory into the local source code repository</li>
-          <li><code>heroku git:remote -a &lt;your-app-name></code> - associate the Heroku app with the repository</li>
-          <li>You'll now be set up to run the app locally, or <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs#push-local-changes">deploy changes</a> to Heroku</li>
-        </ul>
-      </ul>
-      <h3><span class="glyphicon glyphicon-link"></span> Helpful Links</h3>
-      <ul>
-        <li><a href="https://www.heroku.com/home">Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/">Heroku Dev Center</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs">Getting Started with Node on Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/deploying-nodejs">Deploying Node Apps on Heroku</a></li>
-      </ul>
-    </div>
-  </div> <!-- row -->
-   <div class="alert alert-info text-center" role="alert">
-    Please do work through the Getting Started guide, even if you do know how to build such an application.  The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
-  </div>
-</div>
-
-
+                    <!--        <div class="mdl-cell mdl-cell--12-col heb-content--flex">
+                                <div class="unit stih">1</div>
+                                <div class="unit"><span class="strongs">7225</span><span class="translit">bə·rê·šîṯ</span><span class="hebrew">בְּרֵאשִׁ֖ית</span>
+                                    <span class="rus">Inthebeginning</span><span class="strongsnt">Noun</span></div>
+                                <div class="unit"><span class="strongs">1254</span><span class="translit">bā·rā</span><span class="hebrew">בָּרָ֣א</span>
+                                    <span class="rus">created</span><span class="strongsnt">Verb</span></div>
+                                <div class="unit"><span class="strongs">430</span><span class="translit">’ĕ·lō·hîm;</span><span class="hebrew">אֱלֹהִ֑ים</span>
+                                    <span class="rus">God</span><span class="strongsnt">Noun</span></div>
+                                <div class="unit"><span class="strongs">853</span><span class="translit">’êṯ</span><span class="hebrew">אֵ֥ת</span>
+                                    <span class="rus">-</span><span class="strongsnt">Acc</span></div>
+                                <div class="unit"><span class="strongs">8064</span><span class="translit">haš·šā·ma·yim</span><span class="hebrew">הַשָּׁמַ֖יִם</span>
+                                    <span class="rus">theheavens</span><span class="strongsnt">Noun</span></div>
+                                <div class="unit"><span class="strongs">853</span><span class="translit">wə·’êṯ</span><span class="hebrew">וְאֵ֥ת</span>
+                                    <span class="rus">and</span><span class="strongsnt">Acc</span></div>
+                                <div class="unit"><span class="strongs">776</span><span class="translit">hā·’ā·reṣ.</span><span class="hebrew">  .הָאָֽרֶץ׃</span>
+                                    <span class="rus">theearth</span><span class="strongsnt">Noun</span></div>
+                                <div class="unit punct">.</div>
+                            </div>
+                        -->
+                        </div>
+                       
+                    </div>
+                </div>
+                <% include ../partials/footer.ejs %>
+            </main>
+        </div>
+        <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </body>
 </html>
