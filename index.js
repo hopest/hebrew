@@ -1,5 +1,7 @@
 var express = require('express');
 var app = express();
+var cheerio = require('cheerio');
+
 
 //Load modules
 var sqlite3 = require('sqlite3').verbose();
@@ -21,12 +23,19 @@ app.set('view engine', 'ejs');
 
 app.get('/', function (req, res, next) {
 
-    db.all('SELECT book_number, chapter, verse FROM verses WHERE verses.book_number=10 AND verses.chapter = 1', function (err, row) {
+    db.all('SELECT book_number, chapter, verse, text FROM verses WHERE verses.book_number=10 AND verses.chapter = 1 AND verses.verse=1', function (err, row) {
         if (err !== null) {
-      
+
             next(err);
         } else {
-            console.log(row);
+            let $ ;
+            row.forEach(function (bd) {
+               // let reg = bd.text.match(/<s>(.*?)<\/s>/);
+                // console.log(reg);
+               $ =  cheerio.load('<div>'+bd.text+'</div>');
+               console.log($('s + *').html());
+            });
+
             res.render('pages/index', {
                 bookmarks: row,
                 title: "Мои контакты",
