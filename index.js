@@ -28,12 +28,17 @@ app.get('/', function (req, res, next) {
 
             next(err);
         } else {
-            let $ ;
+            let $;
             row.forEach(function (bd) {
-               // let reg = bd.text.match(/<s>(.*?)<\/s>/);
+                // let reg = bd.text.match(/<s>(.*?)<\/s>/);
                 // console.log(reg);
-               $ =  cheerio.load('<div>'+bd.text+'</div>');
-               console.log($('s + *').html());
+                $ = cheerio.load('<div>' + bd.text + '</div>');
+                //  console.log($('div').text());
+                var fruits = $('div').map(function (i, el) {
+                    // this === el
+                    return $(this).attr('class');
+                }).get().join(', ')
+                console.log(fruits);
             });
 
             res.render('pages/index', {
