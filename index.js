@@ -1,17 +1,23 @@
 var express = require('express');
 var app = express();
-var cheerio = require('cheerio');
 
+var bdHebrew = require("./js/bdHebrew.js");
 
 //Load modules
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('BHSEk.SQLite3');
+const BOOK = 39;
 
-// //Perform SELECT Operation
-// db.all("SELECT * FROM books", function (err, rows) {
-//     console.log(rows);
-//     //rows contain values while errors, well you can figure out.
-// });
+db.all('SELECT book_number, long_name FROM  books', function (error, rows) {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log(rows);
+        // rows.forEach(function (row) {
+        //     console.log(row);
+        // });
+    }
+});
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -20,27 +26,16 @@ app.use(express.static(__dirname + '/public'));
 // views is directory for all template files
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-
 app.get('/', function (req, res, next) {
-
-    db.all('SELECT book_number, chapter, verse, text FROM verses WHERE verses.book_number=10 AND verses.chapter = 1 AND verses.verse=1', function (err, row) {
+console.time('test');
+    db.all('SELECT book_number, chapter, verse, text FROM verses WHERE verses.book_number=$numberBook AND verses.chapter = $chapter ', {
+          $numberBook: 10,
+          $chapter: 1
+      }, function (err, row) {
         if (err !== null) {
-
             next(err);
         } else {
-            let $;
-            row.forEach(function (bd) {
-                // let reg = bd.text.match(/<s>(.*?)<\/s>/);
-                // console.log(reg);
-                $ = cheerio.load('<div>' + bd.text + '</div>');
-                //  console.log($('div').text());
-                var fruits = $('div').map(function (i, el) {
-                    // this === el
-                    return $(this).attr('class');
-                }).get().join(', ')
-                console.log(fruits);
-            });
-
+          row =  bdHebrew.parsBDText(row);
             res.render('pages/index', {
                 bookmarks: row,
                 title: "Мои контакты",
@@ -49,22 +44,18 @@ app.get('/', function (req, res, next) {
                 phone: "+1234567890"
 
             }, function (err, html) {
-                res.send(200, html);
+                res.status(200).send(html);
             });
         }
 
-        // res.render('pages/index', {
-        //     title: "Мои контакты",
-        //     emailsVisible: true,
-        //     emails: ["gavgav@mycorp.com", "mioaw@mycorp.com"],
-        //     phone: "+1234567890"
-        // })
 
     });
 
-
+console.timeEnd('test');
 
 });
+
+
 
 app.listen(app.get('port'), function () {
     console.log('Node app is running on port', app.get('port'));

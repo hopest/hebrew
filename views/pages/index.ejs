@@ -10,7 +10,7 @@
         <div class="hebrew-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100 is-upgraded" data-upgraded=",MaterialLayout">
             <header class="mdl-layout__header is-casting-shadow">
                 <div class="mdl-layout__header-row">
-                    <span class="mdl-layout-title">Танах - в подстрочном переводе на русский язык</span>
+                    <!--<span class="mdl-layout-title">Танах - в подстрочном переводе на русский язык</span>-->
                     <div class="mdl-layout-spacer"></div>
                 </div>
             </header>
@@ -19,50 +19,23 @@
                     <div class="hebrew-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--12-col">
                         <h4></h4>
                         <div class="section rtl mdl-grid heb-content">
-
-    <% bookmarks.forEach(function(bible) { %>
-                    <div class="mdl-cell mdl-cell--12-col heb-content--flex">
-                                <div class="unit stih"><%= bible.verse%></div>
-                                <div class="unit"><span class="strongs">7225</span><span class="translit">bə·rê·šîṯ</span><span class="hebrew">בְּרֵאשִׁ֖ית</span>
-                                    <span class="rus">Inthebeginning</span><span class="strongsnt">Noun</span></div>
-                                <div class="unit"><span class="strongs">1254</span><span class="translit">bā·rā</span><span class="hebrew">בָּרָ֣א</span>
-                                    <span class="rus">created</span><span class="strongsnt">Verb</span></div>
-                                <div class="unit"><span class="strongs">430</span><span class="translit">’ĕ·lō·hîm;</span><span class="hebrew">אֱלֹהִ֑ים</span>
-                                    <span class="rus">God</span><span class="strongsnt">Noun</span></div>
-                                <div class="unit"><span class="strongs">853</span><span class="translit">’êṯ</span><span class="hebrew">אֵ֥ת</span>
-                                    <span class="rus">-</span><span class="strongsnt">Acc</span></div>
-                                <div class="unit"><span class="strongs">8064</span><span class="translit">haš·šā·ma·yim</span><span class="hebrew">הַשָּׁמַ֖יִם</span>
-                                    <span class="rus">theheavens</span><span class="strongsnt">Noun</span></div>
-                                <div class="unit"><span class="strongs">853</span><span class="translit">wə·’êṯ</span><span class="hebrew">וְאֵ֥ת</span>
-                                    <span class="rus">and</span><span class="strongsnt">Acc</span></div>
-                                <div class="unit"><span class="strongs">776</span><span class="translit">hā·’ā·reṣ.</span><span class="hebrew">  .הָאָֽרֶץ׃</span>
-                                    <span class="rus">theearth</span><span class="strongsnt">Noun</span></div>
-                                <div class="unit punct">.</div>
-                            </div>
-
-    <% }); %>
-
-                    <!--        <div class="mdl-cell mdl-cell--12-col heb-content--flex">
-                                <div class="unit stih">1</div>
-                                <div class="unit"><span class="strongs">7225</span><span class="translit">bə·rê·šîṯ</span><span class="hebrew">בְּרֵאשִׁ֖ית</span>
-                                    <span class="rus">Inthebeginning</span><span class="strongsnt">Noun</span></div>
-                                <div class="unit"><span class="strongs">1254</span><span class="translit">bā·rā</span><span class="hebrew">בָּרָ֣א</span>
-                                    <span class="rus">created</span><span class="strongsnt">Verb</span></div>
-                                <div class="unit"><span class="strongs">430</span><span class="translit">’ĕ·lō·hîm;</span><span class="hebrew">אֱלֹהִ֑ים</span>
-                                    <span class="rus">God</span><span class="strongsnt">Noun</span></div>
-                                <div class="unit"><span class="strongs">853</span><span class="translit">’êṯ</span><span class="hebrew">אֵ֥ת</span>
-                                    <span class="rus">-</span><span class="strongsnt">Acc</span></div>
-                                <div class="unit"><span class="strongs">8064</span><span class="translit">haš·šā·ma·yim</span><span class="hebrew">הַשָּׁמַ֖יִם</span>
-                                    <span class="rus">theheavens</span><span class="strongsnt">Noun</span></div>
-                                <div class="unit"><span class="strongs">853</span><span class="translit">wə·’êṯ</span><span class="hebrew">וְאֵ֥ת</span>
-                                    <span class="rus">and</span><span class="strongsnt">Acc</span></div>
-                                <div class="unit"><span class="strongs">776</span><span class="translit">hā·’ā·reṣ.</span><span class="hebrew">  .הָאָֽרֶץ׃</span>
-                                    <span class="rus">theearth</span><span class="strongsnt">Noun</span></div>
-                                <div class="unit punct">.</div>
-                            </div>
-                        -->
+                            <% bookmarks.forEach(function(bible) { %>
+                                <div class="mdl-cell mdl-cell--12-col heb-content--flex">
+                                    <div class="unit stih">
+                                        <%= bible.verse%>
+                                    </div>
+                                    <% bible.text.forEach(function(stih) { %>
+                                        <div class="unit">
+                                            <span class="strongs"><%=  stih.s %></span>
+                                            <span class="translit">bə·rê·šîṯ</span>
+                                            <span class="hebrew"><%=  stih.text %></span>
+                                            <span class="rus">русский</span>
+                                            <span class="strongsnt"><%=  stih.m %></span>
+                                        </div>
+                                        <% }); %>
+                                </div>
+                                <% }); %>
                         </div>
-                       
                     </div>
                 </div>
                 <% include ../partials/footer.ejs %>
@@ -70,4 +43,5 @@
         </div>
         <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </body>
+
 </html>
