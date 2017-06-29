@@ -19,21 +19,20 @@
                     <div class="hebrew-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--12-col">
                         <h4></h4>
                         <div class="section rtl mdl-grid heb-content">
-                            <% bookmarks.forEach(function(bible) { %>
+                            <% hebrews.forEach(function(bible) { %>
                                 <div class="mdl-cell mdl-cell--12-col heb-content--flex">
-                                    <div class="unit stih">
-                                        <%= bible.verse%>
-                                    </div>
-                                    <% bible.text.forEach(function(stih) { %>
+                                     <div class="unit stih">
+                                         <%= bible.ch_BHS %>
+                                     </div>
+                              
                                         <div class="unit">
-                                            <span class="strongs"><%=  stih.s %></span>
-                                            <span class="translit">bə·rê·šîṯ</span>
-                                            <span class="hebrew"><%=  stih.text %></span>
+                                            <span class="strongs"><%=  bible.ch_BHS %></span>
+                                            <span class="translit">bible.ch_BHS</span>
+                                            <span class="hebrew"><%=  bible.ch_BHS %></span>
                                             <span class="rus">русский</span>
-                                            <span class="strongsnt"><%=  stih.m %></span>
+                                            <span class="strongsnt"><%=  bible.ch_BHS %></span>
                                         </div>
-                                        <% }); %>
-                                </div>
+                                      </div>
                                 <% }); %>
                         </div>
                     </div>

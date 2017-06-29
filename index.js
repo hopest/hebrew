@@ -36,6 +36,7 @@ console.time('test');
             next(err);
         } else {
           row =  bdHebrew.parsBDText(row);
+          console.log(row);
             res.render('pages/index', {
                 bookmarks: row,
                 title: "Мои контакты",
