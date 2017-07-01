@@ -1,0 +1,40 @@
+book_number,short_name,long_name,short_name2,rus,ch
+10,Gen,Genesis,Gen,Быт,50
+20,Exo,Exodus,Exo,Исх,40
+30,Lev,Leviticus,Lev,Лев,27
+40,Num,Numbers,Num,Чис,36
+50,Deu,Deuteronomy,Deu,Втор,34
+60,Josh,Joshua,Jon,Нав,4
+70,Judg,Judges,Jos,Суд,24
+80,Ruth,Ruth,Rth,Руфь,4
+90,1Sam,1 Samuel,1Sa,1Цар,31
+100,2Sam,2 Samuel,2Sa,2Цар,24
+110,1Kin,1 Kings,1Ki,3Цар,22
+120,2Kin,2 Kings,2Ki,4Цар,25
+130,1Chr,1 Chronicles,1Ch,1Пар,29
+140,2Chr,2 Chronicles,2Ch,2Пар,36
+150,Ezr,Ezra,Ezr,Ездр,10
+160,Neh,Nehemiah,Neh,Неем,13
+190,Esth,Esther,Est,Есф,10
+220,Job,Job,Jer,Иов,52
+230,Ps,Psalms,Psa,Пс,150
+240,Prov,Proverbs,Pro,Прит,31
+250,Eccl,Ecclesiastes,Ecc,Еккл,12
+260,Song,Song of Solomon,Son,Песн,8
+290,Isa,Isaiah,Isa,Ис,66
+300,Jer,Jeremiah,Jdg,Иер,21
+310,Lam,Lamentations,Lam,Плач,5
+330,Ezek,Ezekiel,Eze,Иез,48
+340,Dan,Daniel,Dan,Дан,12
+350,Hos,Hosea,Hos,Ос,14
+360,Joel,Joel,Job,Иоил,42
+370,Am,Amos,Amo,Ам,9
+380,Oba,Obadiah,Oba,Авд,1
+390,Jona,Jonah,Joe,Ион,4
+400,Mic,Micah,Mic,Мих,7
+410,Nah,Nahum,Nah,Наум,3
+420,Hab,Habakkuk,Hab,Авв,3
+430,Zeph,Zephaniah,Zep,Соф,3
+440,Hag,Haggai,Hag,Агг,2
+450,Zech,Zechariah,Zec,Зах,14
+460,Mal,Malachi,Mal,Мал,3

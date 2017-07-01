@@ -1,5 +1,15 @@
-<ul>
-    <% drinks.forEach(function(drink) { %>
-        <li><%= drink.name %> - <%= drink.drunkness %></li>
+        <!-- Select with arrow-->
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
+            <input class="mdl-textfield__input" type="text" id="sample2" value="<%=numberBook %>"  readonly tabIndex="-1">
+            <label for="sample2">
+                <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+            </label>
+            <label for="sample2" class="mdl-textfield__label">Книга</label>
+            <ul for="sample2" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                <% books.forEach(function(book) { %>
+        <a href=/book/<%= book.short_name2 %>><li class="mdl-menu__item"><%= book.rus %></li></a>
     <% }); %>
-</ul>
+            </ul>
+        </div>
+
+        

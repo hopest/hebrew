@@ -17,22 +17,25 @@
             <main class="hebrew-main mdl-layout__content">
                 <div class="hebrew-container mdl-grid">
                     <div class="hebrew-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--12-col">
-                        <h4></h4>
+ <% include ../partials/nav.ejs %>
                         <div class="section rtl mdl-grid heb-content">
                             <% hebrews.forEach(function(bible) { %>
                                 <div class="mdl-cell mdl-cell--12-col heb-content--flex">
-                                     <div class="unit stih">
-                                         <%= bible.ch_BHS %>
-                                     </div>
-                              
+                                    <div class="unit stih">
+                                        <%= bible.numVerse %>
+                                    </div>
+                                    <% bible.textVerse.forEach(function(verse) { %>
                                         <div class="unit">
-                                            <span class="strongs"><%=  bible.ch_BHS %></span>
-                                            <span class="translit">bible.ch_BHS</span>
-                                            <span class="hebrew"><%=  bible.ch_BHS %></span>
+                                            <!-- <span class="strongs"><%=  verse.lex_number %></span>-->
+                                            <span class="manuscript"><%=  verse.manuscript %></span>
+                                            <span class="hebrew"><%=  verse.lex_Hebrew %></span>
+                                            <span class="translit"><%=  verse.transliteration %></span>
+                                            <span class="eng"><%=  verse.gloss_Eng %></span>
                                             <span class="rus">русский</span>
-                                            <span class="strongsnt"><%=  bible.ch_BHS %></span>
+                                            <span class="strongsnt"><%=  verse.lex_number %></span>
                                         </div>
-                                      </div>
+                                        <% }); %>
+                                </div>
                                 <% }); %>
                         </div>
                     </div>
@@ -40,7 +43,8 @@
                 <% include ../partials/footer.ejs %>
             </main>
         </div>
-        <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+        <script src="/material/material.min.js"></script>
+        <script defer src="https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.js"></script>
 </body>
 
 </html>

@@ -2,10 +2,10 @@ var express = require('express');
 var app = express();
 
 var bdHebrew = require("./js/bdHebrew.js");
-
+var books = bdHebrew.books;
 //Load modules
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('ETCBC4cDel.db');
+var db = new sqlite3.Database('ETCBC4cSMall2.db');
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -17,30 +17,16 @@ app.set('view engine', 'ejs');
 app.get('/', function (req, res, next) {
     console.time('test');
     //manuscript, transliteration
-    db.all("SELECT data.book, data.ch_BHS, data.v_BHS, data.manuscript, data.transliteration  FROM data WHERE data.Book='Gen' AND data.ch_BHS=1", function (err, row) {
+    db.all("SELECT v_BHS, manuscript, transliteration, lex_Hebrew,lex_number, gloss_Eng  FROM verse WHERE verse.Book='Gen' AND verse.ch_BHS=1", function (err, row) {
         if (err !== null) {
             next(err);
         } else {
-            var verse = [];
-            var i_verse = 0;
-            var prevVerse = 0;
-            for (var key in row) {
-                if (row[key].v_BHS != prevVerse) {
-                    prevVerse = row[key].v_BHS;
-                    verse[prevVerse]={} ;
-                    prevVerse;
-                }
-                verse[prevVerse].push( {
-                     ver: row[key].v_BHS,
-                     man: row[key].manuscript
-                 });
-                i_verse++;
+            var versus_hebrew = bdHebrew.verseBuild(row);
 
-            }
-            console.log(verse);
-            //row =  bdHebrew.parsBDText(row);
             res.render('pages/index', {
-                hebrews: row,
+                hebrews: versus_hebrew,
+                books: books,
+                numberBook:'Быт',
                 title: "Мои контакты",
                 emailsVisible: true,
                 emails: ["gavgav@mycorp.com", "mioaw@mycorp.com"],
@@ -56,8 +42,40 @@ app.get('/', function (req, res, next) {
 
 });
 
+app.get('/book/:number', function (req, res, next) {
+  //  res.send("number: " + req.params["number"]);
+  var number_book = req.params["number"];
+db.all("SELECT v_BHS, manuscript, transliteration, lex_Hebrew,lex_number, gloss_Eng  FROM verse WHERE verse.Book=? AND verse.ch_BHS=?", [ number_book, 1 ], function (err, row) {
+        if (err !== null) {
+            next(err);
+        } else {
+            var versus_hebrew = bdHebrew.verseBuild(row);
+
+  for (var key = 0, l = books.length; key < l; key++) {
+                    if (books[key].short_name2 == number_book) {
+                      number_book = books[key].rus;
+                      break;
+                    }
+                }
+                
+            res.render('pages/index', {
+                hebrews: versus_hebrew,
+                books: books,
+                numberBook:number_book,
+                title: "Мои контакты",
+                emailsVisible: true,
+                emails: ["gavgav@mycorp.com", "mioaw@mycorp.com"],
+                phone: "+1234567890"
+
+            }, function (err, html) {
+                res.status(200).send(html);
+            });
+        }
+    });
+
+});
 
 
 app.listen(app.get('port'), function () {
-    console.log('Node app is running on port', app.get('port'));
+    console.log('Узел приложения запущен на порту', app.get('port'));
 })

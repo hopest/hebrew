@@ -5,19 +5,19 @@ var bdHebrew = require("./js/bdHebrew.js");
 
 //Load modules
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('BHSEk.SQLite3');
-const BOOK = 39;
+var db = new sqlite3.Database('ETCBC4cSMall2.db');
 
-db.all('SELECT book_number, long_name FROM  books', function (error, rows) {
-    if (error) {
-        console.log(error);
-    } else {
-        console.log(rows);
-        // rows.forEach(function (row) {
-        //     console.log(row);
-        // });
-    }
-});
+
+// db.all('SELECT book_number, long_name FROM  books', function (error, rows) {
+//     if (error) {
+//         console.log(error);
+//     } else {
+//         console.log(rows);
+//         // rows.forEach(function (row) {
+//         //     console.log(row);
+//         // });
+//     }
+// });
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -27,23 +27,16 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.get('/', function (req, res, next) {
-console.time('test');
-    db.all('SELECT book_number, chapter, verse, text FROM verses WHERE verses.book_number=$numberBook AND verses.chapter = $chapter ', {
-          $numberBook: 10,
-          $chapter: 1
-      }, function (err, row) {
+    console.time('test');
+    db.get('SELECT book, ch_BHS, v_BHS FROM verse WHERE verse.Book="Gen" AND ch_BHS=1', function (err, row) {
         if (err !== null) {
             next(err);
         } else {
-          row =  bdHebrew.parsBDText(row);
-          console.log(row);
+            // row =  bdHebrew.parsBDText(row);
+var obj = [];
+ obj.push(row);
             res.render('pages/index', {
-                bookmarks: row,
-                title: "Мои контакты",
-                emailsVisible: true,
-                emails: ["gavgav@mycorp.com", "mioaw@mycorp.com"],
-                phone: "+1234567890"
-
+                rows: obj
             }, function (err, html) {
                 res.status(200).send(html);
             });
@@ -52,7 +45,7 @@ console.time('test');
 
     });
 
-console.timeEnd('test');
+    console.timeEnd('test');
 
 });
 
