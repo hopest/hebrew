@@ -7,9 +7,23 @@
             <label for="sample2" class="mdl-textfield__label">Книга</label>
             <ul for="sample2" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
                 <% books.forEach(function(book) { %>
-        <a href=/book/<%= book.short_name2 %>><li class="mdl-menu__item"><%= book.rus %></li></a>
+        <a href=/book/<%= book.short_name2 %>/<%=numberChapterActive %>><li class="mdl-menu__item"><%= book.rus %></li></a>
     <% }); %>
             </ul>
         </div>
 
-        
+
+             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
+            <input class="mdl-textfield__input" type="text" id="ch" value="<%=numberChapterActive %>"  readonly tabIndex="-1">
+            <label for="ch">
+                <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+            </label>
+            <label for="ch" class="mdl-textfield__label">Глава</label>
+            <ul for="ch" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+               
+                <% for(var i=1; i<numberCharterCount+1; i++) {%>
+                 <a href=/book/<%=numberBookEng %>/<%=i %>><li class="mdl-menu__item"><%=i %></li></a>
+
+                <% } %>
+            </ul>
+        </div>
