@@ -14,6 +14,7 @@ module.exports.books= [{"book_number":10,"short_name":"Gen","long_name":"Genesis
                         });
                     }
                     hebrew[prevVerse - 1].textVerse.push({
+                        wordID:row[key].word_ID,
                         manuscript: row[key].manuscript,
                         transliteration: row[key].transliteration,
                         lex_Hebrew: row[key].lex_Hebrew,

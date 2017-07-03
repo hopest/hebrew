@@ -25,7 +25,7 @@
                                         <%= bible.numVerse %>
                                     </div>
                                     <% bible.textVerse.forEach(function(verse) { %>
-                                        <div class="unit">
+                                        <div class="unit" data-id=<%=verse.wordID %>>
                                             <!-- <span class="strongs"><%=  verse.lex_number %></span>-->
                                             <span class="manuscript"><%=  verse.manuscript %></span>
                                             <span class="hebrew"><%=  verse.lex_Hebrew %></span>
@@ -42,6 +42,13 @@
                 </div>
                 <% include ../partials/footer.ejs %>
             </main>
+            <form action="/register" method="post">
+        <label>Имя</label></br>
+        <input type="text" name="userName" /></br></br>
+        <label>Возраст</label></br>
+        <input type="number" name="userAge" /></br></br>
+        <input type="submit" value="Отправить" />
+    </form>
         </div>
         <script src="/material/material.min.js"></script>
         <script defer src="https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.js"></script>
