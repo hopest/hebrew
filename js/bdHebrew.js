@@ -19,6 +19,7 @@ module.exports.books= [{"book_number":10,"short_name":"Gen","long_name":"Genesis
                         transliteration: row[key].transliteration,
                         lex_Hebrew: row[key].lex_Hebrew,
                         lex_number: row[key].lex_number,
+                        strong: row[key].strong,
                         gloss_Eng: row[key].gloss_Eng,
                     });
                 }

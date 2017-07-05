@@ -28,10 +28,13 @@ app.get('/book/:number/:versus', function (req, res, next) {
   number_book_eng = number_book;
     var number_charter_active = req.params["versus"];
     var number_charter_count = undefined; // передаем количество разделов
-db.all("SELECT word_ID, v_BHS, manuscript, transliteration, lex_Hebrew,lex_number, gloss_Eng  FROM verse WHERE verse.Book=? AND verse.ch_BHS=?", [ number_book, number_charter_active ], function (err, row) {
+    console.time('test');
+db.all("SELECT verse.word_ID, strong.strong, verse.v_BHS, verse.manuscript, verse.transliteration, verse.lex_Hebrew, verse.lex_number, verse.gloss_Eng  FROM verse, strong WHERE verse.word_ID =strong.word_ID  AND verse.Book=? AND verse.ch_BHS=?", [ number_book, number_charter_active ], function (err, row) {
+    
         if (err !== null) {
             next(err);
         } else {
+            console.timeEnd('test');
             var versus_hebrew = bdHebrew.verseBuild(row); 
 
   for (var key = 0, l = books.length; key < l; key++) {
