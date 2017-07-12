@@ -1,1 +1,2 @@
 UPDATE verse SET morph_prscode = (SELECT morphology_without_prs_code.morphology FROM morphology_without_prs_code WHERE verse.word_ID = morphology_without_prs_code.id)
+UPDATE verse SET morph_prscoderus = (SELECT morphology_prs_code_rus.field2 FROM morphology_prs_code_rus, verse WHERE verse.word_ID = morphology_prs_code_rus.id)

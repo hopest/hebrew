@@ -3,6 +3,7 @@
 
 <head>
     <% include ../partials/header.ejs %>
+  
 </head>
 
 <body>
@@ -15,9 +16,10 @@
                 </div>
             </header>
             <main class="hebrew-main mdl-layout__content">
-                <div class="hebrew-container mdl-grid">
+
+                <div id="c_hebrew" class="hebrew-container mdl-grid split-flex split-horizontal-flex">
                     <div class="hebrew-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--12-col">
-    <% include ../partials/nav.ejs %>
+                                        <% include ../partials/nav.ejs %>
                         <div class="section rtl mdl-grid heb-content">
                             <% hebrews.forEach(function(bible) { %>
                                 <div class="mdl-cell mdl-cell--12-col heb-content--flex">
@@ -25,11 +27,13 @@
                                         <%= bible.numVerse %>
                                     </div>
                                     <% bible.textVerse.forEach(function(verse) { %>
-                                        <div class="unit" data-id=<%=verse.wordID %>>
-                                             <span class="strongs"><%=  verse.strong %></span>
+                                        <div class="unit" data-id="<%=verse.wordID %>">
+                                            <span class="strongs"><%=  verse.st_strong %></span>
                                             <span class="manuscript"><%=  verse.manuscript %></span>
-                                            <span class="hebrew"><%=  verse.lex_Hebrew %></span>
                                             <span class="translit"><%=  verse.transliteration %></span>
+                                            <span class="hebrew"><%=  verse.lex_Hebrew %></span>
+                                            <span class="morph"><%=  verse.morph_prscoderus %></span>
+                                            
                                             <span class="eng"><%=  verse.gloss_Eng %></span>
                                             <span class="rus">русский</span>
                                             <span class="strongsnt"><%=  verse.lex_number %></span>
@@ -40,6 +44,7 @@
                         </div>
                     </div>
                 </div>
+        
                 <% include ../partials/footer.ejs %>
             </main>
             <form action="/register" method="post">
@@ -52,6 +57,91 @@
         </div>
         <script src="/material/material.min.js"></script>
         <script defer src="https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.tooltipster/4.2.5/js/tooltipster.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.3/jquery-confirm.min.js"></script>     
+       
+        <script>
+        $(function() {
+    $('.strongs').click(function() {
+let text = $(this).text();
+
+ $.get('/strong/'+text, function(data) {
+     $.alert({
+             title: 'Номера Стронга',
+            content: data,
+            useBootstrap: false,
+            draggable: true,
+            alignMiddle:true,
+            backgroundDismiss:true,
+            boxWidth:'35%',
+            type: 'green'
+            
+        });
+           
+            });
+
+
+});
+
+// $.confirm({
+//     title: 'Prompt!',
+//     content: '' +
+//     '<form action="" class="formName">' +
+//     '<div class="form-group">' +
+//     '<label>Enter something here</label>' +
+//     '<input type="text" placeholder="Your name" class="name form-control" required />' +
+//     '</div>' +
+//     '</form>',
+//     buttons: {
+//         formSubmit: {
+//             text: 'Submit',
+//             btnClass: 'btn-blue',
+//             action: function () {
+//                 var name = this.$content.find('.name').val();
+//                 if(!name){
+//                     $.alert('provide a valid name');
+//                     return false;
+//                 }
+//                 $.alert('Your name is ' + name);
+//             }
+//         },
+//         cancel: function () {
+//             //close
+//         },
+//     },
+//     onContentReady: function () {
+//         // bind to events
+//         var jc = this;
+//         this.$content.find('form').on('submit', function (e) {
+//             // if the user submits the form by pressing enter in the field.
+//             e.preventDefault();
+//             jc.$$formSubmit.trigger('click'); // reference the button and click it
+//         });
+//     }
+// });
+
+$('.morph').tooltipster({
+ 
+   content: 'Loading...',
+    // 'instance' is basically the tooltip. More details in the "Object-oriented Tooltipster" section.
+    functionBefore: function(instance, helper) {
+        var $origin = $(helper.origin);
+        var _verse = $origin.parent().data();
+
+        if ($origin.data('loaded') !== true) {
+            $.get('/morph_def/'+_verse.id, function(data) {
+                instance.content(data);
+
+                $origin.data('loaded', true);
+            });
+        }
+    }
+ 
+
+            });
+});
+        </script>
 </body>
 
 </html>
