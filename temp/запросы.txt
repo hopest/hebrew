@@ -1,0 +1,16 @@
+UPDATE verse
+SET morph_prscoderus = "глаг.Nif'al.иф.3л.мр.мн"
+ WHERE `morph_prscoderus` LIKE 'глаг.niжр.иф.3л.мр.мн' ESCAPE '\'
+
+ UPDATE verse
+SET morph_prscoderus = "глаг.Nif'al.пф.3л.мр.ед"
+ WHERE `morph_prscoderus` LIKE 'глаг.niжр.пф.3л.мр.ед' ESCAPE '\'
+
+ 
+UPDATE verse
+SET morph_prscoderus = "глаг.Nif'al.иф.3л.мр.мн"
+ WHERE `morph_prscoderus` LIKE 'глаг.niжр.иф.3л.мр.мн' ESCAPE '\'
+
+ UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, 'niжр', "Nif'al") WHERE morph_prscoderus LIKE '%niжр%';
+ UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, 'niжр', "Nif'al") 
+ 
