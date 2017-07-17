@@ -21,6 +21,7 @@ module.exports.books= [{"book_number":10,"short_name":"Gen","long_name":"Genesis
                         lex_number: row[key].lex_number,
                         st_strong: row[key].st_strong,
                          gloss_Eng: row[key].gloss_Eng,
+                          gloss_Rus: row[key].gloss_Rus,
                         morph_prscoderus:row[key].morph_prscoderus
                     });
                 }

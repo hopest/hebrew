@@ -27,19 +27,22 @@ app.get('/', function (req, res, next) {
     res.redirect('/book/Gen/1');
 });
 
-app.get('/book/:number/:versus', function (req, res, next) {
-    //  res.send("number: " + req.params["number"]);
-    var number_book = req.params["number"],
+/**
+ * Запрос раздела книги
+ * number: название книги
+ * charter: раздел книги
+ */
+app.get('/book/:number/:charter', function (req, res, next) {
+
+    let number_book = req.params["number"],
         number_book_eng = number_book;
-    var number_charter_active = req.params["versus"];
+    var number_charter_active = req.params["charter"]; 
     var number_charter_count = undefined; // передаем количество разделов
-    console.time('test');
-    db.all("SELECT word_ID, st_strong, v_BHS, manuscript, transliteration, lex_Hebrew, lex_number, gloss_Eng, morph_prscoderus  FROM verse WHERE verse.Book=? AND verse.ch_BHS=?", [number_book, number_charter_active], function (err, row) {
+    db.all("SELECT word_ID, st_strong, v_BHS, manuscript, transliteration, lex_Hebrew, lex_number, gloss_Eng, morph_prscoderus, gloss_Rus  FROM verse WHERE verse.Book=? AND verse.ch_BHS=?", [number_book, number_charter_active], function (err, row) {
 
         if (err !== null) {
             next(err);
         } else {
-            console.timeEnd('test');
             var versus_hebrew = bdHebrew.verseBuild(row);
 
             for (var key = 0, l = books.length; key < l; key++) {
@@ -57,11 +60,6 @@ app.get('/book/:number/:versus', function (req, res, next) {
                 numberBookEng: number_book_eng,
                 numberChapterActive: number_charter_active,
                 numberCharterCount: number_charter_count,
-                title: "Мои контакты",
-                emailsVisible: true,
-                emails: ["gavgav@mycorp.com", "mioaw@mycorp.com"],
-                phone: "+1234567890"
-
             }, function (err, html) {
                 res.status(200).send(html);
             });
@@ -69,7 +67,10 @@ app.get('/book/:number/:versus', function (req, res, next) {
     });
 
 });
-
+/**
+ * Запрос на отображение морфологии слова, при наведении на морфологическую строку
+ * id_word: id в базе
+*/
 app.get('/morph_def/:id_word', function (req, res) {
     var idWord = req.params["id_word"];
     db.all("SELECT morph FROM verse WHERE verse.word_ID=?", idWord, function (err, row) {
@@ -86,20 +87,18 @@ app.get('/morph_def/:id_word', function (req, res) {
  */
 app.get('/strong/:number_strong', function (req, res) {
     var strong = req.params["number_strong"];
-    var arr_strong = strong.split('｜');
+    var arr_strong = strong.split('｜'); // разбиваем на масив, если несколько  номеров стронга
     var query = undefined;
     for (var index = 0; index < arr_strong.length; index++) {
-        if (index == 0){
-            query = ' topic="'+ arr_strong[index]+'"';
-        } else{
-            query += ' OR topic="'+ arr_strong[index]+'"';
+        if (index == 0) {
+            query = ' topic="' + arr_strong[index] + '"';
+        } else {
+            query += ' OR topic="' + arr_strong[index] + '"';
         }
-
     }
-query = "SELECT * FROM dictionary WHERE "+query+"  LIMIT 4"
+    query = "SELECT * FROM dictionary WHERE " + query + "  LIMIT 4"
 
     dbLex.all(query, function (err, row) {
-
         if (err !== null) {
             next(err);
         } else {
@@ -118,13 +117,11 @@ query = "SELECT * FROM dictionary WHERE "+query+"  LIMIT 4"
     });
 });
 
-app.post("/register", urlencodedParser, function (request, response) {
+app.post("/update_rus_verse/", urlencodedParser, function (request, response) {
+
     if (!request.body) return response.sendStatus(400);
-    //     console.log(request.body);
-    //   response.send(`${request.body.userName} - ${request.body.userAge}`);
-    // Directly in the function arguments.
-    db.run("UPDATE verse SET gloss_Eng = ? WHERE word_ID = ?", request.body.userName, 1);
-    //UPDATE my_table SET age = 34 WHERE name='Karen'
+     db.run("UPDATE verse SET gloss_Rus = ? WHERE word_ID = ?",request.body.rus, request.body.id);
+      response.status(200).send(request.body);
 });
 
 
