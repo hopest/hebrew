@@ -1,0 +1,29 @@
+UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "peal", "pe‘al");
+UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "tiжр", "tif‘al");
+UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "etpe", "etpe‘el");
+
+
+
+	UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "pi“el", "piel");
+    UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "hif‘il", "hif");	
+    UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "nif‘al", "nif");	
+	UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "pu“al", "pual");
+    UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "haf‘el", "haf");	
+    UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "hitpa“el", "hit");	
+	UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "hitpe‘el", "htpe");
+    UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "hof‘al", "hof");	
+	UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "passiveqal", "pasq");
+	UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "hishtaf‘al", "hsht");
+	UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "hotpa“al", "hotp");
+    UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "nitpa“el", "nit");	
+	UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "etpa“al", "etpa");
+    UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "tif‘al", "tif");	
+	UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "af‘el", "afel");
+	UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "shaf‘el", "shaf");
+	UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "pe‘al", "peal");
+	UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "pa“el", "pael");
+	UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "pe‘il", "peil");
+	UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "hitpa“al", "htpa");
+	UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "etpe‘el", "etpe");
+	UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "eshtaf‘al", "esht");
+	UPDATE verse SET morph_prscoderus = replace(morph_prscoderus, "ettaf‘al", "etta");

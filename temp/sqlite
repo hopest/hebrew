@@ -2,3 +2,5 @@
 UPDATE verse
 SET morph_prscoderus = 'Smith'
  WHERE `morph_prscoderus` LIKE 'глаг.niжр.иф.3л.мр.мн' ESCAPE '\'
+
+ 
