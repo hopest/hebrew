@@ -6,52 +6,83 @@
 </head>
 
 <body>
-    <div class="mdl-layout__container">
-        <div class="hebrew-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100 is-upgraded" data-upgraded=",MaterialLayout">
-            <!-- <header class="mdl-layout__header is-casting-shadow">
-                <div class="mdl-layout__header-row">
-                    <span class="mdl-layout-title">Танах - в подстрочном переводе на русский язык</span>
-                    <div class="mdl-layout-spacer"></div>
+    <!-- Always shows a header, even in smaller screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+
+                <!-- Title -->
+                <span class="mdl-layout-title">Танах</span>
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+                <!-- Navigation. We hide it in small screens. -->
+
+                <!-- <nav class="mdl-navigation mdl-layout--large-screen-only">
+                    <a class="mdl-navigation__link" href="">Link</a>
+                    <a class="mdl-navigation__link" href="">Link</a>
+                    <a class="mdl-navigation__link" href="">Link</a>
+                    <a class="mdl-navigation__link" href="">Link</a>
+                </nav> -->
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                <label class="mdl-button mdl-js-button mdl-button--icon" for="search-expandable">
+    <i class="material-icons">search</i>
+  </label>
+                <div class="mdl-textfield__expandable-holder">
+                    <input class="mdl-textfield__input" type="text" id="search-expandable">
+                    <label class="mdl-textfield__label" for="search-expandable">Search text</label>
                 </div>
-            </header> -->
-            <main class="hebrew-main mdl-layout__content">
-                <div id="c_hebrew" class="hebrew-container mdl-grid split-flex split-horizontal-flex">
-                    <div class="hebrew-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--12-col">
-                        <% include ../partials/nav.ejs %>
-                            <div class="section rtl mdl-grid heb-content">
-                                <% hebrews.forEach(function(bible) { %>
-                                    <div class="mdl-cell mdl-cell--12-col heb-content--flex">
-                                        <div class="unit stih">
-                                            <%= bible.numVerse %>
-                                        </div>
-                                        <% bible.textVerse.forEach(function(verse) { %>
-                                            <div class="unit" data-id="<%=verse.wordID %>">
-                                                <span class="strongs"><%=  verse.st_strong %></span>
-                                                <span class="manuscript"><%=  verse.manuscript %></span>
-                                                <span class="translit"><%=  verse.transliteration %></span>
-                                                <span class="hebrew"><%=  verse.lex_Hebrew %></span>
-                                                <span class="morph"><%=  verse.morph_prscoderus %></span>
-                                                <span class="eng"><%=  verse.gloss_Eng %></span>
-                                                <span class="rus"><%=  verse.gloss_Rus %></span>
-                                                <span class="strongsnt"><%=  verse.lex_number %></span>
-                                            </div>
-                                            <% }); %>
-                                    </div>
-                                    <% }); %>
-                            </div>
-                    </div>
-                </div>
-                <% include ../partials/footer.ejs %>
-            </main>
+            </div>
+            <!-- <span class="mdl-layout-title">Title</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="">Link</a>
+                <a class="mdl-navigation__link" href="">Link</a>
+                <a class="mdl-navigation__link" href="">Link</a>
+                <a class="mdl-navigation__link" href="">Link</a>
+            </nav> -->
         </div>
-        
-        <script src="/js/jquery.min.js"></script>
-        <script src="/material/material.min.js"></script>
-        <script src="/material/getmdl-select.min.js"></script>
-        
-        <script src="/js/tooltipster.bundle.min.js"></script>
-        <script src="/dialog/jquery-confirm.min.js"></script>
-        <script src="/lib/noty/noty.js"></script>
-        <script src="/js/myHebrew.js"></script>
+        <main class="hebrew-main mdl-layout__content">
+            <div id="c_hebrew" class="hebrew-container mdl-grid split-flex split-horizontal-flex">
+                <div class="hebrew-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--12-col">
+                    <% include ../partials/nav.ejs %>
+                        <div class="section rtl mdl-grid heb-content">
+                            <% hebrews.forEach(function(bible) { %>
+                                <div class="mdl-cell mdl-cell--12-col heb-content--flex">
+                                    <div class="unit stih">
+                                        <%= bible.numVerse %>
+                                    </div>
+                                    <% bible.textVerse.forEach(function(verse) { %>
+                                        <div class="unit" data-id="<%=verse.wordID %>">
+                                            <span class="strongs"><%=  verse.st_strong %></span>
+                                            <span class="manuscript"><%=  verse.manuscript %></span>
+                                            <span class="translit"><%=  verse.transliteration %></span>
+                                            <span class="hebrew"><%=  verse.lex_Hebrew %></span>
+                                            <span class="morph"><%=  verse.morph_prscoderus %></span>
+                                            <span class="eng"><%=  verse.gloss_Eng %></span>
+                                            <span class="rus"><%=  verse.gloss_Rus %></span>
+                                            <span class="strongsnt"><%=  verse.lex_number %></span>
+                                        </div>
+                                        <% }); %>
+                                </div>
+                                <% }); %>
+                        </div>
+                </div>
+            </div>
+            <% include ../partials/footer.ejs %>
+        </main>
+    </div>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/material/material.min.js"></script>
+    <script src="/material/getmdl-select.min.js"></script>
+
+    <script src="/js/tooltipster.bundle.min.js"></script>
+    <script src="/dialog/jquery-confirm.min.js"></script>
+    <script src="/lib/noty/noty.js"></script>
+    <script src="/js/myHebrew.js"></script>
 </body>
+
 </html>

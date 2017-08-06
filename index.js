@@ -117,6 +117,41 @@ app.get('/strong/:number_strong', function (req, res) {
     });
 });
 
+/**
+ * Поиск
+ */
+app.get('/search/:searchText', function (req, res) {
+    var searchText = req.params["searchText"];
+    var arr_strong = strong.split('｜'); // разбиваем на масив, если несколько  номеров стронга
+    var query = undefined;
+    for (var index = 0; index < arr_strong.length; index++) {
+        if (index == 0) {
+            query = ' topic="' + arr_strong[index] + '"';
+        } else {
+            query += ' OR topic="' + arr_strong[index] + '"';
+        }
+    }
+    query = "SELECT * FROM dictionary WHERE " + query + "  LIMIT 4"
+
+    dbLex.all(query, function (err, row) {
+        if (err !== null) {
+            next(err);
+        } else {
+            let tows = row;
+            var html = ejs.renderFile(__dirname + '/views/partials/templateStrong.ejs', {
+                dlg_strongs: tows
+            }, function (err, str) {
+                if (err !== null) {
+                    next(err);
+                } else {
+                    res.status(200).send(str);
+                }
+            });
+
+        }
+    });
+});
+
 app.post("/update_rus_verse/", urlencodedParser, function (request, response) {
 
     if (!request.body) return response.sendStatus(400);
