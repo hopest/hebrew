@@ -1,0 +1,10 @@
+<div class='dlgStrong'>
+ <% dlg_find.forEach(function(bible) { %>
+         <a class="topic" href="/book/<%-  bible.Book %>/<%-  bible.ch_BHS %>#<%-  bible.v_BHS %>"><%-  bible.Book %>. <%-  bible.ch_BHS %>:<%=  bible.v_BHS -%></a>
+ <!-- <span class="topic"><%-  bible.Book %>. <%-  bible.ch_BHS %>:<%=  bible.v_BHS -%></span> -->
+<span class="pronun"><%=  bible.find -%></span>
+ <hr/>
+         <% }); %>
+<div>
+
+        <!-- Object {Book: "Gen", ch_BHS: 1, v_BHS: 1, …} -->

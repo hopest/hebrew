@@ -1,4 +1,21 @@
         $(function () {
+
+        	$("#book").change(function () {
+        		var book = $(this).val();
+        		// chapter = $("#chapter :selected").val();
+        		window.location.href = "/book/" + book + "/" + 1;
+        	});
+
+        	/**
+        	 * Переход по главе
+        	 */
+        	$("#chapter").change(function () {
+        		var c_chapter = $(this).val(),
+        			c_book = $("#book :selected").val();
+
+        		window.location.href = "/book/" + c_book + "/" + c_chapter;
+        	});
+
         	$('.strongs').click(function () {
         		let text = $(this).text();
 
@@ -12,13 +29,31 @@
         				backgroundDismiss: true,
         				boxWidth: '35%',
         				type: 'green'
+        			});
 
+        		});
 
+			});
+			// 
+        	$('.Find').click(function () {
+				let text = $("input.inputFind").val();
+				if (text=="") return;
+        		$.get('/search/' + text, function (data) {
+        			$.alert({
+        				title: 'Поиск',
+        				content: data,
+        				useBootstrap: false,
+        				draggable: true,
+        				alignMiddle: true,
+        				backgroundDismiss: true,
+        				boxWidth: '35%',
+        				type: 'green'
         			});
 
         		});
 
         	});
+
         	$('.unit .rus').on("click", (function () {
         		var id_data_verse = $(this).parent('.unit').data();
         		var verse_rus = $(this);

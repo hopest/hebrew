@@ -122,24 +122,16 @@ app.get('/strong/:number_strong', function (req, res) {
  */
 app.get('/search/:searchText', function (req, res) {
     var searchText = req.params["searchText"];
-    var arr_strong = strong.split('｜'); // разбиваем на масив, если несколько  номеров стронга
     var query = undefined;
-    for (var index = 0; index < arr_strong.length; index++) {
-        if (index == 0) {
-            query = ' topic="' + arr_strong[index] + '"';
-        } else {
-            query += ' OR topic="' + arr_strong[index] + '"';
-        }
-    }
-    query = "SELECT * FROM dictionary WHERE " + query + "  LIMIT 4"
 
-    dbLex.all(query, function (err, row) {
+    query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS,  GROUP_CONCAT(verse.gloss_Rus, \" \") as find  FROM verse,  (SELECT * FROM verse  WHERE gloss_Rus LIKE '%"+searchText+"%'   GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE  verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
+         db.all(query, function (err, row) {
         if (err !== null) {
             next(err);
         } else {
             let tows = row;
-            var html = ejs.renderFile(__dirname + '/views/partials/templateStrong.ejs', {
-                dlg_strongs: tows
+            var html = ejs.renderFile(__dirname + '/views/partials/templateFind.ejs', {
+                dlg_find: tows
             }, function (err, str) {
                 if (err !== null) {
                     next(err);
