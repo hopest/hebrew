@@ -1,5 +1,8 @@
         $(function () {
 
+var dateTime = "900jkljh700jghj345458678768";
+console.log(dateTime.match(/H\d{1,4}/g));
+
         	$("#book").change(function () {
         		var book = $(this).val();
         		// chapter = $("#chapter :selected").val();
@@ -34,14 +37,14 @@
         		});
 
 			});
-			// 
+			// Поиск
         	$('.Find').click(function () {
 				let text = $("input.inputFind").val();
 				if (text=="") return;
-        		$.get('/search/' + text, function (data) {
+        	//	$.get('/search/' + text, function (data) {
         			$.alert({
         				title: 'Поиск',
-        				content: data,
+        				content: 'url:/search/' + text,
         				useBootstrap: false,
         				draggable: true,
         				alignMiddle: true,
@@ -50,9 +53,13 @@
         				type: 'green'
         			});
 
-        		});
+        	//	});
 
-        	});
+			});
+			
+			/**
+			 * 
+			 */
 
         	$('.unit .rus').on("click", (function () {
         		var id_data_verse = $(this).parent('.unit').data();

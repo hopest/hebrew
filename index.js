@@ -8,6 +8,7 @@ var books = bdHebrew.books;
 //Load modules
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('ETCBC4cSMall2__.sqlite3');
+db.all("PRAGMA case_sensitive_like=ON", null,function(){});
 var dbLex = new sqlite3.Database('lex.dictionary.SQLite3');
 
 // создаем парсер для данных application/x-www-form-urlencoded
@@ -123,8 +124,20 @@ app.get('/strong/:number_strong', function (req, res) {
 app.get('/search/:searchText', function (req, res) {
     var searchText = req.params["searchText"];
     var query = undefined;
+    //Проверяем пользователь вводил поиск по номерам стронга?
+    let isStrong = searchText.match(/H\d{1,4}/g);
+    let subQuery="";
 
-    query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS,  GROUP_CONCAT(verse.gloss_Rus, \" \") as find  FROM verse,  (SELECT * FROM verse  WHERE gloss_Rus LIKE '%"+searchText+"%'   GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE  verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
+    if (isStrong == null)
+        {
+       query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS,  GROUP_CONCAT(verse.gloss_Rus, \" \") as find  FROM verse,  (SELECT * FROM verse  WHERE gloss_Rus LIKE '%"+searchText+"%'   GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE  verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";        
+        }
+    else{
+           query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS, verse.gloss_Rus,  GROUP_CONCAT(verse.gloss_Rus, \" \") as find   FROM verse,  (SELECT * FROM verse  WHERE st_strong LIKE '"+searchText+"'  GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE  verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
+        //query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS,  GROUP_CONCAT(verse.gloss_Rus, \" \") as find  FROM verse,  (SELECT * FROM verse  WHERE st_strong LIKE '"+searchText+"'   GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE  verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS AND verse.st_strong == CC.st_strong GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
+    }
+//console.log(dateTime.match(/H\d{1,4}/g));
+    //query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS,  GROUP_CONCAT(verse.gloss_Rus, \" \") as find  FROM verse,  (SELECT * FROM verse  WHERE gloss_Rus LIKE '%"+searchText+"%'   GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE  verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
          db.all(query, function (err, row) {
         if (err !== null) {
             next(err);

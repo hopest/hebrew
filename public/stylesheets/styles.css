@@ -144,6 +144,12 @@
                    font-size: large
                }
                
+               .dlgFindText {
+                   max-height: 70vh;
+                   overflow-y: scroll;
+                   overflow-x: hidden;
+               }
+               
                .dlgStrong df {
                    color: rgb(0, 150, 136);
                    line-height: 1.3;
