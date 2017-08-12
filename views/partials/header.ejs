@@ -36,3 +36,28 @@
 <link rel="stylesheet" type="text/css" href="/stylesheets/tooltipster.bundle.min.css" />
 <link rel="stylesheet" href="/dialog/jquery-confirm.min.css">
 <link href="/lib/noty/noty.css" rel="stylesheet" />
+<script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
+<script>
+
+ // the "notfound" implements a catch-all
+      // with page('*', notfound). Here we have
+      // no catch-all, so page.js will redirect
+      // to the location of paths which do not
+      // match any of the following routes
+      //
+    //  page.base('/basic');
+
+   //   page('/', index);
+      page('/contact', about);
+    
+      // page('/contact', contact);
+      // page('/contact/:contactName', contact);
+      page();
+
+      function about() {
+console.log("jk");
+document.querySelector('.heb-content--flex')
+          .textContent = 'viewing index';
+      }
+
+</script>
