@@ -3,23 +3,26 @@
 var dateTime = "900jkljh700jghj345458678768";
 console.log(dateTime.match(/H\d{1,4}/g));
 
-        	$("#book").change(function () {
+$( ".hebrew-container" ).on( "change", "#book", function() {
+        	//$("#book").change(function () {
         		var book = $(this).val();
         		// chapter = $("#chapter :selected").val();
-        		window.location.href = "/book/" + book + "/" + 1;
+        		window.location.href = "#book/" + book + "/" + 1;
         	});
 
         	/**
         	 * Переход по главе
         	 */
-        	$("#chapter").change(function () {
+			$( ".hebrew-container" ).on( "change", "#chapter", function() {
+        	//$("#chapter").change(function () {
         		var c_chapter = $(this).val(),
         			c_book = $("#book :selected").val();
 
-        		window.location.href = "/book/" + c_book + "/" + c_chapter;
+        		window.location.href = "#book/" + c_book + "/" + c_chapter;
         	});
 
-        	$('.strongs').click(function () {
+			$( ".hebrew-container" ).on( "click", ".strongs", function() {
+        	// $('.strongs').click(function () {
         		let text = $(this).text();
 
         		$.get('/strong/' + text, function (data) {
@@ -38,7 +41,8 @@ console.log(dateTime.match(/H\d{1,4}/g));
 
 			});
 			// Поиск
-        	$('.Find').click(function () {
+			$( ".hebrew-container" ).on( "click", ".Find", function() {
+        //	$('.Find').click(function () {
 				let text = $("input.inputFind").val();
 				if (text=="") return;
         	//	$.get('/search/' + text, function (data) {
@@ -61,7 +65,7 @@ console.log(dateTime.match(/H\d{1,4}/g));
 			 * 
 			 */
 
-        	$('.unit .rus').on("click", (function () {
+        	$('.hebrew-container').on("click",'.unit .rus', (function () {
         		var id_data_verse = $(this).parent('.unit').data();
         		var verse_rus = $(this);
 
@@ -69,9 +73,9 @@ console.log(dateTime.match(/H\d{1,4}/g));
         			title: 'Перевод слова',
         			content: '' +
         				'<form action="#">' +
-        				'  <div class="mdl-textfield mdl-js-textfield">' +
-        				'<input class="mdl-textfield__input edit_rus" type="text" id="sample3">' +
-        				'<label class="mdl-textfield__label" for="sample3">Пишем перевод...</label>' +
+        				'  <div class="control">' +
+        				'<input class="input edit_rus" type="text" id="sample3">' +
+        				
         				'</div>' +
         				'</form>',
         			boxWidth: '300px',
@@ -151,8 +155,8 @@ console.log(dateTime.match(/H\d{1,4}/g));
 
         	}));
 
-
-        	$('.morph').tooltipster({
+			$('.hebrew-container').on('mouseenter', '.morph', function(){
+				$(this).tooltipster({
 
         		content: 'Загрузка...',
         		// 'instance' is basically the tooltip. More details in the "Object-oriented Tooltipster" section.
@@ -169,5 +173,6 @@ console.log(dateTime.match(/H\d{1,4}/g));
         			}
         		}
 
-        	});
+			}).tooltipster('open');
+		});
         });

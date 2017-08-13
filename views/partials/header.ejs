@@ -13,13 +13,13 @@
 <meta name="apple-mobile-web-app-title" content="Hebrew">
 
 <link rel="apple-touch-icon" sizes="180x180" href="http://bulma.io/favicons/apple-touch-icon.png?v=201701041855">
-  <link rel="icon" type="image/png" href="http://bulma.io/favicons/favicon-32x32.png?v=201701041855" sizes="32x32">
-  <link rel="icon" type="image/png" href="http://bulma.io/favicons/favicon-16x16.png?v=201701041855" sizes="16x16">
-  <link rel="manifest" href="http://bulma.io/favicons/manifest.json?v=201701041855">
-  <link rel="mask-icon" href="http://bulma.io/favicons/safari-pinned-tab.svg?v=201701041855" color="#00d1b2">
-  <link rel="shortcut icon" href="http://bulma.io/favicons/favicon.ico?v=201701041855">
-  <meta name="msapplication-config" content="http://bulma.io/favicons/browserconfig.xml?v=201701041855">
-  <meta name="theme-color" content="#00d1b2">
+<link rel="icon" type="image/png" href="http://bulma.io/favicons/favicon-32x32.png?v=201701041855" sizes="32x32">
+<link rel="icon" type="image/png" href="http://bulma.io/favicons/favicon-16x16.png?v=201701041855" sizes="16x16">
+<link rel="manifest" href="http://bulma.io/favicons/manifest.json?v=201701041855">
+<link rel="mask-icon" href="http://bulma.io/favicons/safari-pinned-tab.svg?v=201701041855" color="#00d1b2">
+<link rel="shortcut icon" href="http://bulma.io/favicons/favicon.ico?v=201701041855">
+<meta name="msapplication-config" content="http://bulma.io/favicons/browserconfig.xml?v=201701041855">
+<meta name="theme-color" content="#00d1b2">
 
 <!-- <link rel="stylesheet" href="/material/material.min.css"> -->
 <link rel="stylesheet" href="/bulma/bulma.css">
@@ -27,7 +27,7 @@
 
 <link rel="stylesheet" href="/stylesheets/styles.css">
 <!-- Fonts -->
- <!-- <link href='https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en'
+<!-- <link href='https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en'
     rel='stylesheet' type='text/css'>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
 
@@ -36,28 +36,31 @@
 <link rel="stylesheet" type="text/css" href="/stylesheets/tooltipster.bundle.min.css" />
 <link rel="stylesheet" href="/dialog/jquery-confirm.min.css">
 <link href="/lib/noty/noty.css" rel="stylesheet" />
+<script src="/js/jquery.min.js"></script>
 <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
 <script>
+  page.base('/');
 
- // the "notfound" implements a catch-all
-      // with page('*', notfound). Here we have
-      // no catch-all, so page.js will redirect
-      // to the location of paths which do not
-      // match any of the following routes
-      //
-    //  page.base('/basic');
+  page('/', index);
+  //  page('/', '#/book/Gen/1');
+  page('/book/:number/:charter', index);
+  page('*', notfound);
+  page();
 
-   //   page('/', index);
-      page('/contact', about);
-    
-      // page('/contact', contact);
-      // page('/contact/:contactName', contact);
-      page();
+  function notfound() {
 
-      function about() {
-console.log("jk");
-document.querySelector('.heb-content--flex')
-          .textContent = 'viewing index';
-      }
+    console.log("data");
+  };
 
+  function index(ctx) {
+    if (ctx.hash == "") {
+      ctx.hash = "book/Gen/1";
+
+    }
+    $.get('/h' + ctx.hash, function (data) {
+      //	instance.content(data);
+      document.querySelector('.hebrew-container')
+        .innerHTML = data;
+    });
+  }
 </script>

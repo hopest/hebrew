@@ -1,0 +1,24 @@
+<div class="hebrew-content">
+    <% include ../partials/nav.ejs %>
+        <div class="rtl  heb-content">
+            <% hebrews.forEach(function(bible) { %>
+                <div class="heb-content--flex">
+                    <a name="<%= bible.numVerse %>" class="unit stih">
+                        <%= bible.numVerse %>
+                    </a>
+                    <% bible.textVerse.forEach(function(verse) { %>
+                        <div class="unit" data-id="<%=verse.wordID %>">
+                            <span class="strongs"><%=  verse.st_strong %></span>
+                            <span class="manuscript"><%=  verse.manuscript %></span>
+                            <span class="translit"><%=  verse.transliteration %></span>
+                            <span class="hebrew"><%=  verse.lex_Hebrew %></span>
+                            <span class="morph"><%=  verse.morph_prscoderus %></span>
+                            <span class="eng"><%=  verse.gloss_Eng %></span>
+                            <span class="rus"><%=  verse.gloss_Rus %></span>
+                            <!-- <span class="strongsnt"><%=  verse.lex_number %></span> -->
+                        </div>
+                        <% }); %>
+                </div>
+                <% }); %>
+        </div>
+</div>

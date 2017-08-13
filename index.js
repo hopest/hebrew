@@ -25,7 +25,14 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.get('/', function (req, res, next) {
 
-    res.redirect('/book/Gen/1');
+    // res.redirect('/book/Gen/1');
+
+    res.render('pages/index', {
+       
+    }, function (err, html) {
+        res.status(200).send(html);
+    });
+
 });
 
 /**
@@ -33,7 +40,7 @@ app.get('/', function (req, res, next) {
  * number: название книги
  * charter: раздел книги
  */
-app.get('/book/:number/:charter', function (req, res, next) {
+app.get('/hbook/:number/:charter', function (req, res, next) {
 
     let number_book = req.params["number"],
         number_book_eng = number_book;
@@ -54,7 +61,7 @@ app.get('/book/:number/:charter', function (req, res, next) {
                 }
             }
 
-            res.render('pages/index', {
+            res.render('partials/versepage', {
                 hebrews: versus_hebrew,
                 books: books,
                 numberBook: number_book,
