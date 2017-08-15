@@ -1,7 +1,9 @@
-<div class="columns is-mobile is-centered">
-    <div class="column  is-narrow">
-        <div class="select">
-            <select id="book" name="n_book">
+<nav class="navbars">
+
+        <div class="columns is-mobile is-centered">
+            <div class="column  is-narrow">
+                <div class="select">
+                    <select id="book" name="n_book">
        <% books.forEach(function(book) { %>
            <% if (book.rus == numberBook) { %>
     <option selected value="<%= book.short_name2 %>"><%= book.rus %></option>
@@ -10,11 +12,9 @@
        <% } %>
     <% }); %>
   </select>
-        </div>
-
-
-        <div class="select">
-            <select id="chapter" name="n_chapter">
+      </div>
+           <div class="select">
+                    <select id="chapter" name="n_chapter">
         <% for(var i=1; i<numberCharterCount+1; i++) {%>
            <% if (i == numberChapterActive) { %>
     <option selected value="<%=i %>"><%=i %></option>
@@ -23,18 +23,19 @@
        <% } %>
     <% } %>
   </select>
-        </div>
-    </div>
-    <div class="column  is-narrow">
-        <div class="field has-addons has-addons-right">
-            <div class="control">
-                <input class="input inputFind" type="text" placeholder="Что ищим?">
+                </div>
             </div>
-            <div class="control">
-                <a class="button is-info Find">
+            <div class="column  is-narrow">
+                <div class="field has-addons has-addons-right">
+                    <div class="control">
+                        <input class="input inputFind" value="<%=globalsearchText %>" type="text" placeholder="Что ищем?">
+                    </div>
+                    <div class="control">
+                        <a class="button is-info Find">
       Поиск
     </a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+</nav>

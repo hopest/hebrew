@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <% include ../partials/header.ejs %>
 </head>
-
 <body>
-        <div class="container">
-            <main class="hebrew-main mdl-layout__content">
-                <div id="c_hebrew" class="hebrew-container">
-                  
-                </div>
-                <!-- <% include ../partials/footer.ejs %> -->
-            </main>
+    <% include ../partials/nav.ejs %>
+        <div class="columns">
+
+                <!-- <div class="column is-2">
+                        <p class="notification is-info">
+                          <code class="html">is-one-quarter</code>
+                        </p>
+                      </div> -->
+                      <div class="column">
+                            <main class="hebrew-main mdl-layout__content">
+                                    <div id="c_hebrew" class="hebrew-container">
+                                      
+                                    </div>
+                                    <!-- <% include ../partials/footer.ejs %> -->
+                                </main>
+                      </div>
+
+            
         </div>
 </body>
 
@@ -21,7 +30,10 @@
 <script src="/js/tooltipster.bundle.min.js"></script>
 <script src="/dialog/jquery-confirm.min.js"></script>
 <script src="/lib/noty/noty.js"></script>
+<script src="/lib/inputizer/inputizer.min.js"></script>
+
 <script src="/js/myHebrew.js"></script>
+
 </body>
 
 </html>

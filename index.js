@@ -10,6 +10,7 @@ var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('ETCBC4cSMall2__.sqlite3');
 db.all("PRAGMA case_sensitive_like=ON", null,function(){});
 var dbLex = new sqlite3.Database('lex.dictionary.SQLite3');
+var globalsearchText ="";
 
 // создаем парсер для данных application/x-www-form-urlencoded
 var urlencodedParser = bodyParser.urlencoded({
@@ -23,15 +24,30 @@ app.use(express.static(__dirname + '/public'));
 // views is directory for all template files
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
+/**
+ * Побудова начального темплейта, на стороні сервера
+ */
 app.get('/', function (req, res, next) {
 
-    // res.redirect('/book/Gen/1');
 
     res.render('pages/index', {
-       
+        books: books,
+         globalsearchText:globalsearchText,
+        numberBook: 1,
+        numberChapterActive: 1,
+        numberCharterCount: 50,
     }, function (err, html) {
         res.status(200).send(html);
     });
+
+
+    // res.redirect('/book/Gen/1');
+
+    // res.render('pages/index', {
+       
+    // }, function (err, html) {
+    //     res.status(200).send(html);
+    // });
 
 });
 
@@ -46,7 +62,7 @@ app.get('/hbook/:number/:charter', function (req, res, next) {
         number_book_eng = number_book;
     var number_charter_active = req.params["charter"]; 
     var number_charter_count = undefined; // передаем количество разделов
-    db.all("SELECT word_ID, st_strong, v_BHS, manuscript, transliteration, lex_Hebrew, lex_number, gloss_Eng, morph_prscoderus, gloss_Rus  FROM verse WHERE verse.Book=? AND verse.ch_BHS=?", [number_book, number_charter_active], function (err, row) {
+    db.all("SELECT word_ID, st_strong, v_BHS, manuscript, transliteration, lex_Hebrew, lex_number, gloss_Eng, morph ,morph_prscoderus, gloss_Rus  FROM verse WHERE verse.Book=? AND verse.ch_BHS=?", [number_book, number_charter_active], function (err, row) {
 
         if (err !== null) {
             next(err);
@@ -64,6 +80,7 @@ app.get('/hbook/:number/:charter', function (req, res, next) {
             res.render('partials/versepage', {
                 hebrews: versus_hebrew,
                 books: books,
+                globalsearchText:globalsearchText,
                 numberBook: number_book,
                 numberBookEng: number_book_eng,
                 numberChapterActive: number_charter_active,
@@ -129,7 +146,7 @@ app.get('/strong/:number_strong', function (req, res) {
  * Поиск
  */
 app.get('/search/:searchText', function (req, res) {
-    var searchText = req.params["searchText"];
+    var searchText =globalsearchText = req.params["searchText"];
     var query = undefined;
     //Проверяем пользователь вводил поиск по номерам стронга?
     let isStrong = searchText.match(/H\d{1,4}/g);
@@ -151,7 +168,7 @@ app.get('/search/:searchText', function (req, res) {
         } else {
             let tows = row;
             var html = ejs.renderFile(__dirname + '/views/partials/templateFind.ejs', {
-                dlg_find: tows
+                dlg_find: tows,
             }, function (err, str) {
                 if (err !== null) {
                     next(err);
