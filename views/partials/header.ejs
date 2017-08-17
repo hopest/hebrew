@@ -44,17 +44,9 @@
 
   page('/', index);
   page('/book/:number/:charter', index);
-  page('/book/:number/:charter/', anchor);
-  page('*', notfound);
   page();
 
-  function notfound() {
 
-  };
-
-  function anchor() {
-
-  };
 
   function index(ctx) {
     if (ctx.hash == "") {

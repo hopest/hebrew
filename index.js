@@ -8,14 +8,16 @@ var books = bdHebrew.books;
 //Load modules
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('ETCBC4cSMall2__.sqlite3');
-db.all("PRAGMA case_sensitive_like=ON", null,function(){});
+db.all("PRAGMA case_sensitive_like=ON", null, function () {});
 var dbLex = new sqlite3.Database('lex.dictionary.SQLite3');
-var globalsearchText ="";
+var globalsearchText = "";
 
 // создаем парсер для данных application/x-www-form-urlencoded
 var urlencodedParser = bodyParser.urlencoded({
     extended: false
 });
+// app.use(bodyParser.json()); // support json encoded bodies
+// app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -32,7 +34,7 @@ app.get('/', function (req, res, next) {
 
     res.render('pages/index', {
         books: books,
-         globalsearchText:globalsearchText,
+        globalsearchText: globalsearchText,
         numberBook: 1,
         numberChapterActive: 1,
         numberCharterCount: 50,
@@ -44,7 +46,7 @@ app.get('/', function (req, res, next) {
     // res.redirect('/book/Gen/1');
 
     // res.render('pages/index', {
-       
+
     // }, function (err, html) {
     //     res.status(200).send(html);
     // });
@@ -60,7 +62,7 @@ app.get('/hbook/:number/:charter', function (req, res, next) {
 
     let number_book = req.params["number"],
         number_book_eng = number_book;
-    var number_charter_active = req.params["charter"]; 
+    var number_charter_active = req.params["charter"];
     var number_charter_count = undefined; // передаем количество разделов
     db.all("SELECT word_ID, st_strong, v_BHS, manuscript, transliteration, lex_Hebrew, lex_number, gloss_Eng, morph ,morph_prscoderus, gloss_Rus  FROM verse WHERE verse.Book=? AND verse.ch_BHS=?", [number_book, number_charter_active], function (err, row) {
 
@@ -80,7 +82,7 @@ app.get('/hbook/:number/:charter', function (req, res, next) {
             res.render('partials/versepage', {
                 hebrews: versus_hebrew,
                 books: books,
-                globalsearchText:globalsearchText,
+                globalsearchText: globalsearchText,
                 numberBook: number_book,
                 numberBookEng: number_book_eng,
                 numberChapterActive: number_charter_active,
@@ -95,7 +97,7 @@ app.get('/hbook/:number/:charter', function (req, res, next) {
 /**
  * Запрос на отображение морфологии слова, при наведении на морфологическую строку
  * id_word: id в базе
-*/
+ */
 app.get('/morph_def/:id_word', function (req, res) {
     var idWord = req.params["id_word"];
     db.all("SELECT morph FROM verse WHERE verse.word_ID=?", idWord, function (err, row) {
@@ -146,23 +148,27 @@ app.get('/strong/:number_strong', function (req, res) {
  * Поиск
  */
 app.get('/search/:searchText', function (req, res) {
-    var searchText =globalsearchText = req.params["searchText"];
+    var searchText = globalsearchText = req.params["searchText"];
     var query = undefined;
     //Проверяем пользователь вводил поиск по номерам стронга?
     let isStrong = searchText.match(/H\d{1,4}/g);
-    let subQuery="";
+    let subQuery = "";
 
-    if (isStrong == null)
-        {
-       query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS,  GROUP_CONCAT(verse.gloss_Rus, \" \") as find  FROM verse,  (SELECT * FROM verse  WHERE gloss_Rus LIKE '%"+searchText+"%'   GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE  verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";        
-        }
-    else{
-           query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS, verse.gloss_Rus,  GROUP_CONCAT(verse.gloss_Rus, \" \") as find   FROM verse,  (SELECT * FROM verse  WHERE st_strong LIKE '"+searchText+"'  GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE  verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
+    var s_currBook = ""; //по текущей книге
+
+    if (req.query.hasOwnProperty("currbook")) {
+        s_currBook = 'verse.Book="' + req.query.currbook + '" AND ';
+    }
+
+    if (isStrong == null) {
+        query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS,  GROUP_CONCAT(verse.gloss_Rus, \" \") as find  FROM verse,  (SELECT * FROM verse  WHERE gloss_Rus LIKE '%" + searchText + "%'   GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE " + s_currBook + " verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
+    } else {
+        query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS, verse.gloss_Rus,  GROUP_CONCAT(verse.gloss_Rus, \" \") as find   FROM verse,  (SELECT * FROM verse  WHERE st_strong LIKE '" + searchText + "'  GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE " + s_currBook + " verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
         //query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS,  GROUP_CONCAT(verse.gloss_Rus, \" \") as find  FROM verse,  (SELECT * FROM verse  WHERE st_strong LIKE '"+searchText+"'   GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE  verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS AND verse.st_strong == CC.st_strong GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
     }
-//console.log(dateTime.match(/H\d{1,4}/g));
+    //console.log(dateTime.match(/H\d{1,4}/g));
     //query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS,  GROUP_CONCAT(verse.gloss_Rus, \" \") as find  FROM verse,  (SELECT * FROM verse  WHERE gloss_Rus LIKE '%"+searchText+"%'   GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE  verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
-         db.all(query, function (err, row) {
+    db.all(query, function (err, row) {
         if (err !== null) {
             next(err);
         } else {
@@ -184,8 +190,8 @@ app.get('/search/:searchText', function (req, res) {
 app.post("/update_rus_verse/", urlencodedParser, function (request, response) {
 
     if (!request.body) return response.sendStatus(400);
-     db.run("UPDATE verse SET gloss_Rus = ? WHERE word_ID = ?",request.body.rus, request.body.id);
-      response.status(200).send(request.body);
+    db.run("UPDATE verse SET gloss_Rus = ? WHERE word_ID = ?", request.body.rus, request.body.id);
+    response.status(200).send(request.body);
 });
 
 

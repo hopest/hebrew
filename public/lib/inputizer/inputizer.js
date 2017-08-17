@@ -23,7 +23,6 @@
       
       var _this = this;
       var $this = $(this);
-      
       $this.attr('contenteditable', true).addClass('inputized');
       
       $this.bind('blur', function() {

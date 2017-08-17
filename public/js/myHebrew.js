@@ -45,6 +45,13 @@
         	// Поиск
         	$(".navbars").on("click", ".Find", function () {
         		var text = $("input.inputFind").val();
+        		var jn_curr = "";
+
+        		if ($('.curr_book').prop('checked')) {
+        			var _curr = $(".rtl.heb-content").data("book");
+        			jn_curr = "?currbook=" + _curr;
+        		}
+
         		if (text == "") return;
         		$.jsPanel({
         			position: {
@@ -60,7 +67,7 @@
         			headerTitle: "Поиск слова: " + text,
         			//contentAjax: $.get('/search/' + text),
         			contentAjax: {
-        				url: '/search/' + text,
+        				url: '/search/' + text + jn_curr,
         				autoload: true,
         				//  done: function () {
 
@@ -69,10 +76,9 @@
         		});
         	});
 
-        	$('.hebrew-container').on("mouseenter", '.rus', (function () {
+        	$('.hebrew-container').on("click focus", '.rus', (function () {
         		if ($(this).hasClass("inputized") == false) {
         			$(this).inputizer(function (value) {
-
         				var id_data_verse = $(this).parent('.unit').data();
         				//var verse_rus = $(this);
 
@@ -80,12 +86,12 @@
         						id: id_data_verse.id,
         						rus: value
         					}).done(function (data) {
-        						console.log("done",data);
+        						console.log("done", data);
         					}).fail(function (err) {
-        						console.log("fail",err);
+        						console.log("fail", err);
         					})
         					.always(function (mm) {
-        						console.log("always",mm);
+        						console.log("always", mm);
         					})
 
         			})
