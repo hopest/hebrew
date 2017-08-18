@@ -30,27 +30,9 @@ app.set('view engine', 'ejs');
  * Побудова начального темплейта, на стороні сервера
  */
 app.get('/', function (req, res, next) {
-
-
-    res.render('pages/index', {
-        books: books,
-        globalsearchText: globalsearchText,
-        numberBook: 1,
-        numberChapterActive: 1,
-        numberCharterCount: 50,
-    }, function (err, html) {
+    res.render('pages/index', {}, function (err, html) {
         res.status(200).send(html);
     });
-
-
-    // res.redirect('/book/Gen/1');
-
-    // res.render('pages/index', {
-
-    // }, function (err, html) {
-    //     res.status(200).send(html);
-    // });
-
 });
 
 /**
@@ -59,7 +41,6 @@ app.get('/', function (req, res, next) {
  * charter: раздел книги
  */
 app.get('/hbook/:number/:charter', function (req, res, next) {
-
     let number_book = req.params["number"],
         number_book_eng = number_book;
     var number_charter_active = req.params["charter"];
@@ -155,7 +136,7 @@ app.get('/search/:searchText', function (req, res) {
     let subQuery = "";
 
     var s_currBook = ""; //по текущей книге
-
+    // будет ли запрос с условием книги?
     if (req.query.hasOwnProperty("currbook")) {
         s_currBook = 'verse.Book="' + req.query.currbook + '" AND ';
     }
