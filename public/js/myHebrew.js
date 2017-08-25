@@ -41,11 +41,20 @@
         	// Поиск
         	$("#c_hebrew").on("click", ".Find", function () {
         		var text = $("input.inputFind").val();
-        		var jn_curr = "";
-
+				var jn_curr = "";
+				var jn_strong_verse = "";
         		if ($('.curr_book').prop('checked')) {
         			var _curr = $(".rtl.heb-content").data("book");
         			jn_curr = "?currbook=" + _curr;
+				}
+				
+				// Стронг в стихах
+				if ($('.strong_verse').prop('checked')) {
+					if (jn_curr !=""){
+					jn_strong_verse = "&jn_strong_verse=true";
+					}else{
+						jn_strong_verse = "?jn_strong_verse=true";
+					}
         		}
 
         		if (text == "") return;
@@ -63,11 +72,9 @@
         			headerTitle: "Поиск слова: " + text,
         			//contentAjax: $.get('/search/' + text),
         			contentAjax: {
-        				url: '/search/' + text + jn_curr,
+        				url: '/search/' + text + jn_curr+jn_strong_verse,
         				autoload: true,
-        				//  done: function () {
 
-        				//  }
         			}
         		});
         	});
