@@ -1,0 +1,392 @@
+[
+ {
+   "book_number": 10,
+   "short_name": "Gen",
+   "long_name": "Genesis",
+   "short_name2": "Gen",
+   "rus": "Быт",
+   "ch": 50,
+   "JVK": 50,
+   "long_name_heb": "Берейшит"
+ },
+ {
+   "book_number": 20,
+   "short_name": "Exo",
+   "long_name": "Exodus",
+   "short_name2": "Exo",
+   "rus": "Исх",
+   "ch": 40,
+   "JVK": 40,
+   "long_name_heb": "Шмот"
+ },
+ {
+   "book_number": 30,
+   "short_name": "Lev",
+   "long_name": "Leviticus",
+   "short_name2": "Lev",
+   "rus": "Лев",
+   "ch": 27,
+   "JVK": 27,
+   "long_name_heb": "Ваикра"
+ },
+ {
+   "book_number": 40,
+   "short_name": "Num",
+   "long_name": "Numbers",
+   "short_name2": "Num",
+   "rus": "Чис",
+   "ch": 36,
+   "JVK": 36,
+   "long_name_heb": "Бемидбар"
+ },
+ {
+   "book_number": 50,
+   "short_name": "Deu",
+   "long_name": "Deuteronomy",
+   "short_name2": "Deu",
+   "rus": "Втор",
+   "ch": 34,
+   "JVK": 34,
+   "long_name_heb": "Дварим"
+ },
+ {
+   "book_number": 60,
+   "short_name": "Josh",
+   "long_name": "Joshua",
+   "short_name2": "Jon",
+   "rus": "Нав",
+   "ch": 4,
+   "JVK": 4,
+   "long_name_heb": "Йегошуа"
+ },
+ {
+   "book_number": 70,
+   "short_name": "Judg",
+   "long_name": "Judges",
+   "short_name2": "Jos",
+   "rus": "Суд",
+   "ch": 24,
+   "JVK": 24,
+   "long_name_heb": "Шофетим"
+ },
+ {
+   "book_number": 80,
+   "short_name": "Ruth",
+   "long_name": "Ruth",
+   "short_name2": "Rth",
+   "rus": "Руфь",
+   "ch": 4,
+   "JVK": 4,
+   "long_name_heb": "Рут"
+ },
+ {
+   "book_number": 90,
+   "short_name": "1Sam",
+   "long_name": "1 Samuel",
+   "short_name2": "1Sa",
+   "rus": "1Цар",
+   "ch": 31,
+   "JVK": 31,
+   "long_name_heb": "Шмуэль I"
+ },
+ {
+   "book_number": 100,
+   "short_name": "2Sam",
+   "long_name": "2 Samuel",
+   "short_name2": "2Sa",
+   "rus": "2Цар",
+   "ch": 24,
+   "JVK": 24,
+   "long_name_heb": "Шмуэль II"
+ },
+ {
+   "book_number": 110,
+   "short_name": "1Kin",
+   "long_name": "1 Kings",
+   "short_name2": "1Ki",
+   "rus": "3Цар",
+   "ch": 22,
+   "JVK": 22,
+   "long_name_heb": "Мелахим I"
+ },
+ {
+   "book_number": 120,
+   "short_name": "2Kin",
+   "long_name": "2 Kings",
+   "short_name2": "2Ki",
+   "rus": "4Цар",
+   "ch": 25,
+   "JVK": 25,
+   "long_name_heb": "Мелахим II"
+ },
+ {
+   "book_number": 130,
+   "short_name": "1Chr",
+   "long_name": "1 Chronicles",
+   "short_name2": "1Ch",
+   "rus": "1Пар",
+   "ch": 29,
+   "JVK": 29,
+   "long_name_heb": "Диврей hа-Йамим I"
+ },
+ {
+   "book_number": 140,
+   "short_name": "2Chr",
+   "long_name": "2 Chronicles",
+   "short_name2": "2Ch",
+   "rus": "2Пар",
+   "ch": 36,
+   "JVK": 36,
+   "long_name_heb": "Диврей hа-Йамим II"
+ },
+ {
+   "book_number": 150,
+   "short_name": "Ezr",
+   "long_name": "Ezra",
+   "short_name2": "Ezr",
+   "rus": "Ездр",
+   "ch": 10,
+   "JVK": 10,
+   "long_name_heb": "Эзра"
+ },
+ {
+   "book_number": 160,
+   "short_name": "Neh",
+   "long_name": "Nehemiah",
+   "short_name2": "Neh",
+   "rus": "Неем",
+   "ch": 13,
+   "JVK": 13,
+   "long_name_heb": "Нехемия"
+ },
+ {
+   "book_number": 190,
+   "short_name": "Esth",
+   "long_name": "Esther",
+   "short_name2": "Est",
+   "rus": "Есф",
+   "ch": 10,
+   "JVK": 10,
+   "long_name_heb": "Эстер"
+ },
+ {
+   "book_number": 220,
+   "short_name": "Job",
+   "long_name": "Job",
+   "short_name2": "Jer",
+   "rus": "Иов",
+   "ch": 52,
+   "JVK": 52,
+   "long_name_heb": "Ийов"
+ },
+ {
+   "book_number": 230,
+   "short_name": "Ps",
+   "long_name": "Psalms",
+   "short_name2": "Psa",
+   "rus": "Пс",
+   "ch": 150,
+   "JVK": 150,
+   "long_name_heb": "Тегилим"
+ },
+ {
+   "book_number": 240,
+   "short_name": "Prov",
+   "long_name": "Proverbs",
+   "short_name2": "Pro",
+   "rus": "Прит",
+   "ch": 31,
+   "JVK": 31,
+   "long_name_heb": "Мишлей"
+ },
+ {
+   "book_number": 250,
+   "short_name": "Eccl",
+   "long_name": "Ecclesiastes",
+   "short_name2": "Ecc",
+   "rus": "Еккл",
+   "ch": 12,
+   "JVK": 12,
+   "long_name_heb": "Когелет"
+ },
+ {
+   "book_number": 260,
+   "short_name": "Song",
+   "long_name": "Song of Solomon",
+   "short_name2": "Son",
+   "rus": "Песн",
+   "ch": 8,
+   "JVK": 8,
+   "long_name_heb": "Шир hа-Ширим"
+ },
+ {
+   "book_number": 290,
+   "short_name": "Isa",
+   "long_name": "Isaiah",
+   "short_name2": "Isa",
+   "rus": "Ис",
+   "ch": 66,
+   "JVK": 66,
+   "long_name_heb": "Йешаягу"
+ },
+ {
+   "book_number": 300,
+   "short_name": "Jer",
+   "long_name": "Jeremiah",
+   "short_name2": "Jdg",
+   "rus": "Иер",
+   "ch": 21,
+   "JVK": 21,
+   "long_name_heb": "Эйха"
+ },
+ {
+   "book_number": 310,
+   "short_name": "Lam",
+   "long_name": "Lamentations",
+   "short_name2": "Lam",
+   "rus": "Плач",
+   "ch": 5,
+   "JVK": 5,
+   "long_name_heb": "Ирмеягу"
+ },
+ {
+   "book_number": 330,
+   "short_name": "Ezek",
+   "long_name": "Ezekiel",
+   "short_name2": "Eze",
+   "rus": "Иез",
+   "ch": 48,
+   "JVK": 48,
+   "long_name_heb": "Йехезкель"
+ },
+ {
+   "book_number": 340,
+   "short_name": "Dan",
+   "long_name": "Daniel",
+   "short_name2": "Dan",
+   "rus": "Дан",
+   "ch": 12,
+   "JVK": 12,
+   "long_name_heb": "Даниель"
+ },
+ {
+   "book_number": 350,
+   "short_name": "Hos",
+   "long_name": "Hosea",
+   "short_name2": "Hos",
+   "rus": "Ос",
+   "ch": 14,
+   "JVK": 14,
+   "long_name_heb": "Ошэйа"
+ },
+ {
+   "book_number": 360,
+   "short_name": "Joel",
+   "long_name": "Joel",
+   "short_name2": "Job",
+   "rus": "Иоил",
+   "ch": 42,
+   "JVK": 42,
+   "long_name_heb": "Йоель"
+ },
+ {
+   "book_number": 370,
+   "short_name": "Am",
+   "long_name": "Amos",
+   "short_name2": "Amo",
+   "rus": "Ам",
+   "ch": 9,
+   "JVK": 9,
+   "long_name_heb": "Амос"
+ },
+ {
+   "book_number": 380,
+   "short_name": "Oba",
+   "long_name": "Obadiah",
+   "short_name2": "Oba",
+   "rus": "Авд",
+   "ch": 1,
+   "JVK": 1,
+   "long_name_heb": "Овадья"
+ },
+ {
+   "book_number": 390,
+   "short_name": "Jona",
+   "long_name": "Jonah",
+   "short_name2": "Joe",
+   "rus": "Ион",
+   "ch": 4,
+   "JVK": 3,
+   "long_name_heb": "Йона"
+ },
+ {
+   "book_number": 400,
+   "short_name": "Mic",
+   "long_name": "Micah",
+   "short_name2": "Mic",
+   "rus": "Мих",
+   "ch": 7,
+   "JVK": 7,
+   "long_name_heb": "Миха"
+ },
+ {
+   "book_number": 410,
+   "short_name": "Nah",
+   "long_name": "Nahum",
+   "short_name2": "Nah",
+   "rus": "Наум",
+   "ch": 3,
+   "JVK": 3,
+   "long_name_heb": "Нахум"
+ },
+ {
+   "book_number": 420,
+   "short_name": "Hab",
+   "long_name": "Habakkuk",
+   "short_name2": "Hab",
+   "rus": "Авв",
+   "ch": 3,
+   "JVK": 3,
+   "long_name_heb": "Хавакук"
+ },
+ {
+   "book_number": 430,
+   "short_name": "Zeph",
+   "long_name": "Zephaniah",
+   "short_name2": "Zep",
+   "rus": "Соф",
+   "ch": 3,
+   "JVK": 3,
+   "long_name_heb": "Цфанья"
+ },
+ {
+   "book_number": 440,
+   "short_name": "Hag",
+   "long_name": "Haggai",
+   "short_name2": "Hag",
+   "rus": "Агг",
+   "ch": 2,
+   "JVK": 2,
+   "long_name_heb": "Хагай"
+ },
+ {
+   "book_number": 450,
+   "short_name": "Zech",
+   "long_name": "Zechariah",
+   "short_name2": "Zec",
+   "rus": "Зах",
+   "ch": 14,
+   "JVK": 14,
+   "long_name_heb": "Захарья"
+ },
+ {
+   "book_number": 460,
+   "short_name": "Mal",
+   "long_name": "Malachi",
+   "short_name2": "Mal",
+   "rus": "Мал",
+   "ch": 3,
+   "JVK": 4,
+   "long_name_heb": "Малахи"
+ }
+]

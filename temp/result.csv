@@ -1,0 +1,40 @@
+book_number;short_name;long_name;short_name2;rus;ch;JVK;long_name_heb
+10;Gen;Genesis;Gen;Быт;50;50;Берейшит
+20;Exo;Exodus;Exo;Исх;40;40;Шмот
+30;Lev;Leviticus;Lev;Лев;27;27;Ваикра
+40;Num;Numbers;Num;Чис;36;36;Бемидбар
+50;Deu;Deuteronomy;Deu;Втор;34;34;Дварим
+60;Josh;Joshua;Jon;Нав;4;4;Йегошуа
+70;Judg;Judges;Jos;Суд;24;24;Шофетим
+80;Ruth;Ruth;Rth;Руфь;4;4;Рут
+90;1Sam;1 Samuel;1Sa;1Цар;31;31;Шмуэль I
+100;2Sam;2 Samuel;2Sa;2Цар;24;24;Шмуэль II
+110;1Kin;1 Kings;1Ki;3Цар;22;22;Мелахим I
+120;2Kin;2 Kings;2Ki;4Цар;25;25;Мелахим II
+130;1Chr;1 Chronicles;1Ch;1Пар;29;29;Диврей hа-Йамим I
+140;2Chr;2 Chronicles;2Ch;2Пар;36;36;Диврей hа-Йамим II
+150;Ezr;Ezra;Ezr;Ездр;10;10;Эзра
+160;Neh;Nehemiah;Neh;Неем;13;13;Нехемия
+190;Esth;Esther;Est;Есф;10;10;Эстер
+220;Job;Job;Jer;Иов;52;52;Ийов
+230;Ps;Psalms;Psa;Пс;150;150;Тегилим
+240;Prov;Proverbs;Pro;Прит;31;31;Мишлей
+250;Eccl;Ecclesiastes;Ecc;Еккл;12;12;Когелет
+260;Song;Song of Solomon;Son;Песн;8;8;Шир hа-Ширим
+290;Isa;Isaiah;Isa;Ис;66;66;Йешаягу
+300;Jer;Jeremiah;Jdg;Иер;21;21;Эйха
+310;Lam;Lamentations;Lam;Плач;5;5;Ирмеягу
+330;Ezek;Ezekiel;Eze;Иез;48;48;Йехезкель
+340;Dan;Daniel;Dan;Дан;12;12;Даниель
+350;Hos;Hosea;Hos;Ос;14;14;Ошэйа
+360;Joel;Joel;Job;Иоил;42;42;Йоель
+370;Am;Amos;Amo;Ам;9;9;Амос
+380;Oba;Obadiah;Oba;Авд;1;1;Овадья
+390;Jona;Jonah;Joe;Ион;4;3;Йона
+400;Mic;Micah;Mic;Мих;7;7;Миха
+410;Nah;Nahum;Nah;Наум;3;3;Нахум
+420;Hab;Habakkuk;Hab;Авв;3;3;Хавакук
+430;Zeph;Zephaniah;Zep;Соф;3;3;Цфанья
+440;Hag;Haggai;Hag;Агг;2;2;Хагай
+450;Zech;Zechariah;Zec;Зах;14;14;Захарья
+460;Mal;Malachi;Mal;Мал;3;4;Малахи
