@@ -1,6 +1,5 @@
         $(function () {
         	$("#c_hebrew").on("change", "#book", function () {
-        		debugger
         		var book = $(this).val();
         		// chapter = $("#chapter :selected").val();
         		window.location.href = "#book/" + book + "/" + 1;
@@ -44,7 +43,6 @@
         		var jn_curr = ""; //Текущая книга
         		var jn_strong_verse = ""; //Добавить Стронг в стих
         		var jn_better_find = ""; //Добавить Стронг в стих
-debugger
         		if ($('.curr_book').prop('checked')) {
         			var _curr = $(".rtl.heb-content").data("book");
         			jn_curr = "?currbook=" + _curr;
