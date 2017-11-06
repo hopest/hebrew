@@ -4,13 +4,15 @@ var app = express();
 var bdHebrew = require("./js/bdHebrew.js");
 var bodyParser = require("body-parser");
 var ejs = require('ejs');
+var _ = require('lodash');
 var books = bdHebrew.books;
 //Load modules
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('ETCBC4cSMall2__.sqlite3');
-db.all("PRAGMA case_sensitive_like=ON", null, function () {});
+
 var dbLex = new sqlite3.Database('lex.dictionary.SQLite3');
 var globalsearchText = "";
+
 
 // создаем парсер для данных application/x-www-form-urlencoded
 var urlencodedParser = bodyParser.urlencoded({
@@ -30,6 +32,8 @@ app.set('view engine', 'ejs');
  * Побудова начального темплейта, на стороні сервера
  */
 app.get('/', function (req, res, next) {
+
+
     res.render('pages/index', {}, function (err, html) {
         res.status(200).send(html);
     });
@@ -130,21 +134,43 @@ app.get('/strong/:number_strong', function (req, res) {
  */
 app.get('/search/:searchText', function (req, res) {
     var searchText = globalsearchText = req.params["searchText"];
+
     var query = undefined;
+    
     //Проверяем пользователь вводил поиск по номерам стронга?
     let isStrong = searchText.match(/H\d{1,4}/g);
     let subQuery = "";
-
+   
     var s_currBook = ""; //по текущей книге
+    var isStronginVerseView ="";
     // будет ли запрос с условием книги?
     if (req.query.hasOwnProperty("currbook")) {
         s_currBook = 'verse.Book="' + req.query.currbook + '" AND ';
     }
 
+    // условие для отображение стронга
+    if (req.query.hasOwnProperty("jn_strong_verse")) {
+        isStronginVerseView = ' GROUP_CONCAT(verse.gloss_Rus ||" "|| verse.st_strong,\" \") ';
+    } else{
+        isStronginVerseView = ' GROUP_CONCAT(verse.gloss_Rus, \" \") ';
+
+    }
+
+    var quertyBetter ="";
+    // Поиск по стронгу?
     if (isStrong == null) {
-        query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS,  GROUP_CONCAT(verse.gloss_Rus, \" \") as find  FROM verse,  (SELECT * FROM verse  WHERE gloss_Rus LIKE '%" + searchText + "%'   GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE " + s_currBook + " verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
+        if(req.query.hasOwnProperty("jn_better_find")){
+            quertyBetter = "'" + searchText + "'";
+        }
+        else{
+            
+            quertyBetter = "'%" + searchText + "%'" ;
+        }
+        
+
+        query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS,  "+isStronginVerseView+" as find  FROM verse,  (SELECT * FROM verse  WHERE gloss_Rus LIKE " + quertyBetter + "  GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE " + s_currBook + " verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
     } else {
-        query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS, verse.gloss_Rus,  GROUP_CONCAT(verse.gloss_Rus, \" \") as find   FROM verse,  (SELECT * FROM verse  WHERE st_strong LIKE '" + searchText + "'  GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE " + s_currBook + " verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
+        query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS, verse.gloss_Rus,  "+isStronginVerseView+" as find   FROM verse,  (SELECT * FROM verse  WHERE st_strong LIKE '" + searchText + "'  GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE " + s_currBook + " verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
         //query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS,  GROUP_CONCAT(verse.gloss_Rus, \" \") as find  FROM verse,  (SELECT * FROM verse  WHERE st_strong LIKE '"+searchText+"'   GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE  verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS AND verse.st_strong == CC.st_strong GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
     }
     //console.log(dateTime.match(/H\d{1,4}/g));

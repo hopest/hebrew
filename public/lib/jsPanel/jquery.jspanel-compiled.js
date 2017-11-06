@@ -37,8 +37,8 @@ if (!Object.assign) {
 }
 
 var jsPanel = {
-    version: '3.9.3',
-    date: '2017-07-15 12:05',
+    version: '3.11.0',
+    date: '2017-10-20 21:25',
     id: 0, // counter to add to automatically generated id attribute
     ziBase: 100, // the lowest z-index a jsPanel may have
     zi: 100, // z-index counter, has initially to be the same as ziBase
@@ -956,6 +956,7 @@ var jsPanel = {
     dragit: function dragit(element) {
         var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
+        //let freezeVp = function(e) {e.preventDefault();};
         var elmt = void 0;
         if (typeof element === 'string') {
             elmt = document.querySelector(element);
@@ -979,7 +980,11 @@ var jsPanel = {
             elmtContent = elmt.querySelector('.jsPanel-content'),
             dragstart = void 0,
             drag = void 0,
-            dragstop = void 0;
+            dragstop = void 0,
+            left = void 0,
+            top = void 0,
+            frames = [];
+
         if (jsPanel.isIE) {
             // old fashioned only for IE11
             dragstart = document.createEvent('CustomEvent');
@@ -992,10 +997,6 @@ var jsPanel = {
             dragstart = new Event('dragstart');
             drag = new Event('drag');
             dragstop = new Event('dragstop');
-        }
-
-        function prevDefault(e) {
-            e.preventDefault();
         }
 
         // elmt needs to be positioned absolute or fixed (not needed within jsPanel script)
@@ -1037,6 +1038,15 @@ var jsPanel = {
 
         for (var _i = 0; _i < handles.length; _i++) {
             handles[_i].addEventListener(jsPanel.evtStart, function (e) {
+                e.preventDefault();
+
+                frames = Array.prototype.slice.call(document.querySelectorAll('iframe'));
+                if (frames.length) {
+                    frames.forEach(function (item) {
+                        item.style.pointerEvents = 'none';
+                    });
+                }
+
                 var elmtRect = elmt.getBoundingClientRect(),
                     /* needs to be calculated on pointerdown!! */
                 elmtParentRect = elmtParent.getBoundingClientRect(),
@@ -1049,8 +1059,11 @@ var jsPanel = {
                     elmtParentBottomBorder = parseInt(elmtParentStyles.getPropertyValue('border-bottom-width'), 10),
                     startLeft = void 0,
                     startTop = void 0,
-                    startX = e.pageX || e.touches[0].pageX,
-                    startY = e.pageY || e.touches[0].pageY,
+
+                //startX = e.pageX || e.touches[0].pageX,
+                //startY = e.pageY || e.touches[0].pageY,
+                startX = e.touches ? e.touches[0].pageX : e.pageX,
+                    startY = e.touches ? e.touches[0].pageY : e.pageY,
                     scrollLeft = window.scrollX || window.pageXOffset,
                     // IE11 doesn't know scrollX
                 scrollTop = window.scrollY || window.pageYOffset,
@@ -1072,7 +1085,7 @@ var jsPanel = {
                 }
 
                 // prevent window scroll while draging elmt
-                window.addEventListener(jsPanel.evtStart, prevDefault(e), false);
+                //document.body.addEventListener(jsPanel.evtMove, freezeVp, false);
 
                 // calc min/max left/top values if containment is set
                 if (elmtParentTagName === 'body' && containment) {
@@ -1132,20 +1145,27 @@ var jsPanel = {
                 }
 
                 dragPanel = function dragPanel(evt) {
+                    e.preventDefault();
+
+                    if (opts.disableOnMaximized && jQuery(elmt).data('status') === 'maximized') {
+                        return false;
+                    }
                     // trigger dragstarted only once per drag
                     if (!dragstarted) {
                         document.dispatchEvent(dragstart);
                         elmt.style.opacity = opts.opacity;
                         if (typeof opts.start === 'function') {
-                            opts.start.call(el, el);
+                            opts.start.call(el, el, { left: startLeft, top: startTop });
                         }
                     }
                     dragstarted = 1;
                     // trigger drag permanently while draging
                     document.dispatchEvent(drag);
 
-                    var left = elmtParentLeftBorder + startLeft + (evt.pageX || evt.touches[0].pageX) - startX + xDif,
-                        top = elmtParentTopBorder + startTop + (evt.pageY || evt.touches[0].pageY) - startY + yDif;
+                    //left = elmtParentLeftBorder + startLeft + (evt.pageX || evt.touches[0].pageX) - startX + xDif;
+                    //top  = elmtParentTopBorder + startTop + (evt.pageY || evt.touches[0].pageY) - startY + yDif;
+                    left = elmtParentLeftBorder + startLeft + (evt.touches ? evt.touches[0].pageX : evt.pageX) - startX + xDif;
+                    top = elmtParentTopBorder + startTop + (evt.touches ? evt.touches[0].pageY : evt.pageY) - startY + yDif;
 
                     // apply min/max left/top values if needed
                     if (left <= minLeft) {
@@ -1193,7 +1213,7 @@ var jsPanel = {
                     // prevent selctions while draging
                     window.getSelection().removeAllRanges();
                     if (typeof opts.drag === 'function') {
-                        opts.drag.call(el, el);
+                        opts.drag.call(el, el, { left: parseFloat(el.css('left')), top: parseFloat(el.css('top')) });
                     }
                 };
 
@@ -1203,6 +1223,7 @@ var jsPanel = {
 
         document.addEventListener(jsPanel.evtEnd, function () {
             document.removeEventListener(jsPanel.evtMove, dragPanel, false);
+            //document.body.removeEventListener(jsPanel.evtMove, freezeVp, false);
             if (dragstarted) {
                 elmtContent.style.pointerEvents = 'inherit';
                 document.dispatchEvent(dragstop);
@@ -1210,11 +1231,14 @@ var jsPanel = {
                 dragstarted = undefined;
                 jsPanel.calcPositionFactors(element);
                 if (typeof opts.stop === 'function') {
-                    opts.stop.call(el, el);
+                    opts.stop.call(el, el, { left: parseFloat(el.css('left')), top: parseFloat(el.css('top')) });
                 }
             }
-            // reenable window scrolling
-            window.removeEventListener(jsPanel.evtEnd, prevDefault, false);
+            if (frames.length) {
+                frames.forEach(function (item) {
+                    item.style.pointerEvents = 'inherit';
+                });
+            }
         }, false);
 
         return el;
@@ -1225,6 +1249,7 @@ var jsPanel = {
     resizeit: function resizeit(element) {
         var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
+        //let freezeVp = function(e) {e.preventDefault();};
         var elmt = void 0;
         if (typeof element === 'string') {
             elmt = document.querySelector(element);
@@ -1255,7 +1280,8 @@ var jsPanel = {
             minHeight = typeof opts.minHeight === 'function' ? opts.minHeight() : opts.minHeight,
             resizestart = void 0,
             resize = void 0,
-            resizestop = void 0;
+            resizestop = void 0,
+            frames = [];
         if (jsPanel.isIE) {
             // old fashioned only for IE11
             resizestart = document.createEvent('CustomEvent');
@@ -1268,10 +1294,6 @@ var jsPanel = {
             resizestart = new Event('dragstart');
             resize = new Event('drag');
             resizestop = new Event('dragstop');
-        }
-
-        function prevDefault(e) {
-            e.preventDefault();
         }
 
         if (typeof containment === 'number') {
@@ -1310,6 +1332,15 @@ var jsPanel = {
         var handles = elmt.getElementsByClassName('jsPanel-resizeit-handle');
         for (var i = 0; i < handles.length; i++) {
             handles[i].addEventListener(jsPanel.evtStart, function (e) {
+                e.preventDefault();
+
+                frames = Array.prototype.slice.call(document.querySelectorAll('iframe'));
+                if (frames.length) {
+                    frames.forEach(function (item) {
+                        item.style.pointerEvents = 'none';
+                    });
+                }
+
                 var elmtRect = elmt.getBoundingClientRect(),
                     /* needs to be calculated on pointerdown!! */
                 elmtParentRect = elmtParent.getBoundingClientRect(),
@@ -1382,7 +1413,7 @@ var jsPanel = {
                 }
 
                 // prevent window scroll while draging element
-                window.addEventListener(jsPanel.evtStart, prevDefault(e), false);
+                //document.body.addEventListener(jsPanel.evtMove, freezeVp, false);
 
                 // calculate corrections for rotated panels
                 var computedStyle = window.getComputedStyle(elmt),
@@ -1396,11 +1427,13 @@ var jsPanel = {
                 }
 
                 resizePanel = function resizePanel(evt) {
+                    evt.preventDefault();
+
                     // trigger resizestarted only once per resize
                     if (!resizestarted) {
                         document.dispatchEvent(resizestart);
                         if (typeof opts.start === 'function') {
-                            opts.start.call(el, el);
+                            opts.start.call(el, el, { width: startWidth, height: startHeight });
                         }
                     }
                     resizestarted = 1;
@@ -1558,17 +1591,24 @@ var jsPanel = {
                     jsPanel.contentResize(element);
                     window.getSelection().removeAllRanges();
                     if (typeof opts.resize === 'function') {
-                        opts.resize.call(el, el);
+                        opts.resize.call(el, el, { width: parseFloat(el.css('width')), height: parseFloat(el.css('height')) });
                     }
                 };
 
                 document.addEventListener(jsPanel.evtMove, resizePanel, false);
+
+                // remove resize handler when mouse leaves browser window (mouseleave doesn't work)
+                window.addEventListener('mouseout', function (e) {
+                    if (e.relatedTarget === null) {
+                        document.removeEventListener(jsPanel.evtMove, resizePanel, false);
+                    }
+                }, false);
             }, false);
         }
 
         document.addEventListener(jsPanel.evtEnd, function (e) {
 
-            if (e.target.classList.contains('jsPanel-resizeit-handle')) {
+            if (e.target.classList && e.target.classList.contains('jsPanel-resizeit-handle')) {
                 var isLeftChange = void 0,
                     isTopChange = void 0,
                     cl = e.target.className;
@@ -1623,6 +1663,7 @@ var jsPanel = {
             }
 
             document.removeEventListener(jsPanel.evtMove, resizePanel, false);
+            //document.body.removeEventListener(jsPanel.evtMove, freezeVp, false);
             if (resizestarted) {
                 elmtContent.style.pointerEvents = 'inherit';
                 document.dispatchEvent(resizestop);
@@ -1638,11 +1679,14 @@ var jsPanel = {
                 jsPanel.calcPositionFactors(element);
                 // jsPanel specific code end ------------------------------------
                 if (typeof opts.stop === 'function') {
-                    opts.stop.call(el, el);
+                    opts.stop.call(el, el, { width: parseFloat(el.css('width')), height: parseFloat(el.css('height')) });
                 }
             }
-            // reenable window scrolling
-            window.removeEventListener(jsPanel.evtEnd, prevDefault, false);
+            if (frames.length) {
+                frames.forEach(function (item) {
+                    item.style.pointerEvents = 'inherit';
+                });
+            }
         }, false);
 
         return el;
@@ -2410,8 +2454,8 @@ var jsPanel = {
                 width: Math.round(elData.width), // width of elt (includes border)
                 height: Math.round(elData.height), // height of elt (includes border)
                 left: Math.round(elData.left + window.pageXOffset), // left value of elt option.of RELATIVE TO DOCUMENT
-                top: Math.round(elData.top + window.pageYOffset // top value of elt option.of RELATIVE TO DOCUMENT
-                ) };
+                top: Math.round(elData.top + window.pageYOffset) // top value of elt option.of RELATIVE TO DOCUMENT
+            };
         }
 
         if (typeof options === 'string') {
@@ -2659,6 +2703,20 @@ var jsPanel = {
         }
 
         newCoords = { left: newCoordsLeft, top: newCoordsTop };
+
+        // apply minLeft, minTop, maxLeft and maxTop values (need to be numbers)
+        if ((option.minLeft || option.minLeft === 0) && typeof option.minLeft === 'number' && newCoords.left < option.minLeft) {
+            newCoords.left = option.minLeft;
+        }
+        if ((option.maxLeft || option.maxLeft === 0) && typeof option.maxLeft === 'number' && newCoords.left > option.maxLeft) {
+            newCoords.left = option.maxLeft;
+        }
+        if ((option.minTop || option.minTop === 0) && typeof option.minTop === 'number' && newCoords.top < option.minTop) {
+            newCoords.top = option.minTop;
+        }
+        if ((option.maxTop || option.maxTop === 0) && typeof option.maxTop === 'number' && newCoords.top > option.maxTop) {
+            newCoords.top = option.maxTop;
+        }
 
         if (typeof option.modify === 'function') {
 
@@ -3149,11 +3207,7 @@ var jsPanel = {
     }
 };
 
-if ('onpointerup' in window) {
-    jsPanel.evtStart = 'pointerdown';
-    jsPanel.evtMove = 'pointermove';
-    jsPanel.evtEnd = 'pointerup';
-} else if ('ontouchend' in window) {
+if ('ontouchend' in window) {
     jsPanel.evtStart = 'touchstart';
     jsPanel.evtMove = 'touchmove';
     jsPanel.evtEnd = 'touchend';
@@ -3325,10 +3379,14 @@ if ('onpointerup' in window) {
         jsP.hideControls = function (sel) {
             // NodeList.forEach() is not supported by all browsers yet -> convert to array
             Array.prototype.slice.call(jsP.header.controls[0].getElementsByClassName('jsPanel-btn')).forEach(function (item) {
-                item.style.display = 'block';
+                if (item) {
+                    item.style.display = 'block';
+                }
             });
             sel.forEach(function (item) {
-                jsP.header.controls[0].querySelector(item).style.display = 'none';
+                if (jsP.header.controls[0].querySelector(item)) {
+                    jsP.header.controls[0].querySelector(item).style.display = 'none';
+                }
             });
         }; /* used only internally */
 

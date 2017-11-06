@@ -1,6 +1,5 @@
         $(function () {
         	$("#c_hebrew").on("change", "#book", function () {
-        		debugger
         		var book = $(this).val();
         		// chapter = $("#chapter :selected").val();
         		window.location.href = "#book/" + book + "/" + 1;
@@ -41,11 +40,29 @@
         	// Поиск
         	$("#c_hebrew").on("click", ".Find", function () {
         		var text = $("input.inputFind").val();
-        		var jn_curr = "";
-
+        		var jn_curr = ""; //Текущая книга
+        		var jn_strong_verse = ""; //Добавить Стронг в стих
+        		var jn_better_find = ""; //Добавить Стронг в стих
         		if ($('.curr_book').prop('checked')) {
         			var _curr = $(".rtl.heb-content").data("book");
         			jn_curr = "?currbook=" + _curr;
+        		}
+
+        		// Стронг в стихах
+        		if ($('.strong_verse').prop('checked')) {
+        			if (jn_curr != "") {
+        				jn_strong_verse = "&jn_strong_verse=true";
+        			} else {
+        				jn_strong_verse = "?jn_strong_verse=true";
+        			}
+        		}
+        		// Точность в поиске
+        		if ($('.better_find').prop('checked')) {
+        			if (jn_curr != "") {
+        				jn_better_find = "&jn_better_find=true";
+        			} else {
+        				jn_better_find = "?jn_better_find=true";
+        			}
         		}
 
         		if (text == "") return;
@@ -63,11 +80,24 @@
         			headerTitle: "Поиск слова: " + text,
         			//contentAjax: $.get('/search/' + text),
         			contentAjax: {
-        				url: '/search/' + text + jn_curr,
-        				autoload: true,
-        				//  done: function () {
+        				url: '/search/' + text + jn_curr + jn_strong_verse + jn_better_find,
 
-        				//  }
+        				autoload: true,
+        				done: function (data, textStatus, jqXHR, panel) {
+        					var cont = this.content.append(data);
+
+        					cont.unmark({
+        						done: function () {
+        							cont.mark(text);
+        						}
+        					});
+
+        				},
+        			},
+
+        			callback: function () {
+
+
         			}
         		});
         	});
