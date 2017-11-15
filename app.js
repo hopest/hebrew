@@ -87,6 +87,7 @@ app.get('/morph_def/:id_word', function (req, res) {
     var idWord = req.params["id_word"];
     db.all("SELECT morph FROM verse WHERE verse.word_ID=?", idWord, function (err, row) {
 
+        
         if (err !== null) {
             next(err);
         } else {
