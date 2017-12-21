@@ -1,19 +1,38 @@
         $(function () {
+
+
+        	var gbook = "Gen",
+        		gchapter = 1,
+        		gparalels = "no";
+        	/**
+        	 * Переход по книге
+        	 */
         	$("#c_hebrew").on("change", "#book", function () {
-        		var book = $(this).val();
-        		// chapter = $("#chapter :selected").val();
-        		window.location.href = "#book/" + book + "/" + 1;
+        		gbook = $(this).val();
+        		gchapter = $("#chapter :selected").val();
+				window.location.href = "#book/" + gbook + "/" + 1 + "?jn_paralels=" + gparalels;
+// 			debugger	
+// 				$.get("#book/" + gbook + "/" + 1, { name: "John", time: "2pm" } )
+//   .done(function( data ) {
+//     alert( "Data Loaded: " + data );
+//   });
         	});
 
         	/**
         	 * Переход по главе
         	 */
         	$("#c_hebrew").on("change", "#chapter", function () {
-        		//$("#chapter").change(function () {
-        		var c_chapter = $(this).val(),
-        			c_book = $("#book :selected").val();
+				gchapter = $(this).val();
 
-        		window.location.href = "#book/" + c_book + "/" + c_chapter;
+        			window.location.href = "#book/" + gbook + "/" + gchapter + "?jn_paralels=" + gparalels;
+        	});
+        	/**
+        	 * Переход с учетом паралельного перевода
+        	 */
+        	$("#c_hebrew").on("change", "#paralels", function () {
+				gparalels = $(this).val();
+				debugger
+        			window.location.href = "#book/" + gbook + "/" + gchapter + "?jn_paralels=" + gparalels;
         	});
 
         	/**

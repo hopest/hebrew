@@ -129,7 +129,7 @@
 
                .heb-content--flex {
                    display: flex;
-                   flex-wrap: wrap;
+                   flex-wrap: nowrap;
                    border-width: 1px;
                    border-style: solid;
                    border-color: rgb(252, 252, 252);
@@ -178,7 +178,7 @@
 
                .rus:empty:after {
                    content: "текст";
-                    /* background: rgba(255, 228, 196, 0.35);  */
+                   /* background: rgba(255, 228, 196, 0.35);  */
                    color: #999;
                    padding: 1px 5px;
                    font-size: 16px;
@@ -228,4 +228,20 @@
 
                .navbars {
                    display: list-item;
+               }
+
+               .heb-content--verse {
+                   display: flex;
+                   flex-wrap: wrap;
+                   border-width: 1px;
+                   align-items: center;
+               }
+
+               .heb-content--verse s{
+                text-decoration: dashed;
+                vertical-align: super;
+                font-size: 80%;
+                padding-right: 5px;
+                padding-left: 2px;
+                color: #02adc3;
                }

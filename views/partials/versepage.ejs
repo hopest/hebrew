@@ -1,13 +1,14 @@
 <% include ../partials/nav.ejs %>
 <div class="hebrew-content">
         <div class="rtl  heb-content" data-book = "<%=numberBookEng %>">
-            <% hebrews.forEach(function(bible) { %>
+            <% hebrews.forEach(function(bible, index) { %>
                 <div class="heb-content--flex">
+                    <div class="heb-content--verse" data-verse="<%= bible.numVerse %>">
                     <a name="<%= bible.numVerse %>" class="unit stih">
                         <%= bible.numVerse %>
                     </a>
                     <% bible.textVerse.forEach(function(verse) { %>
-                        <div class="unit" data-id="<%=verse.wordID %>">
+                        <div class="unit" data-id="<%= verse.wordID %>">
                             <span class="strongs"><%=  verse.st_strong %></span>
                             <span class="manuscript"><%-  verse.manuscript %></span>
                             <span class="translit"><%=  verse.transliteration %></span>
@@ -18,6 +19,15 @@
                             <!-- <span class="strongsnt"><%=  verse.lex_number %></span> -->
                         </div>
                         <% }); %>
+                    </div>
+
+                    <div class="heb-content--verse" data-verse="<%= bible.numVerse %>">
+                        <div class="heb-content--content">
+                        <% if (paralels) { %>
+                            <%- paralels[index].text %>
+                          <% } %>
+                        </div>    
+                    </div>
                 </div>
                 <% }); %>
         </div>

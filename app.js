@@ -8,9 +8,10 @@ var _ = require('lodash');
 var books = bdHebrew.books;
 //Load modules
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('ETCBC4cSMall2__.sqlite3');
+var db = new sqlite3.Database('./module_bible/ETCBC4cSMall2__.sqlite3');
+var RST = new sqlite3.Database('./module_bible/RST+.sqlite3');
+var dbLex = new sqlite3.Database('./module_bible/lex.dictionary.SQLite3');
 
-var dbLex = new sqlite3.Database('lex.dictionary.SQLite3');
 var globalsearchText = "";
 
 
@@ -45,26 +46,46 @@ app.get('/', function (req, res, next) {
  * charter: раздел книги
  */
 app.get('/hbook/:number/:charter', function (req, res, next) {
-    let number_book = req.params["number"],
+    var number_book = req.params["number"];
+    var isParalels = req.query.jn_paralels,
         number_book_eng = number_book;
     var number_charter_active = req.params["charter"];
     var number_charter_count = undefined; // передаем количество разделов
+    var num_book; // передаем цифро
     db.all("SELECT word_ID, st_strong, v_BHS, manuscript, transliteration, lex_Hebrew, lex_number, gloss_Eng, morph ,morph_prscoderus, gloss_Rus  FROM verse WHERE verse.Book=? AND verse.ch_BHS=?", [number_book, number_charter_active], function (err, row) {
 
         if (err !== null) {
             next(err);
         } else {
+          
+          
             var versus_hebrew = bdHebrew.verseBuild(row);
-
             for (var key = 0, l = books.length; key < l; key++) {
                 if (books[key].short_name2 == number_book) {
                     number_book = books[key].rus;
                     number_charter_count = books[key].ch;
+                    num_book = books[key].book_number;
+                    
                     break;
                 }
             }
 
+if (isParalels == "syn" || isParalels == undefined)
+{
+
+    RST.all("SELECT  chapter, verse, text   FROM verses WHERE book_number=? AND chapter=?", [num_book, number_charter_active], function (err, row) {
+
+        if (err !== null) {
+            next(err);
+        } else {
+
+            row;
+            versus_hebrew;
+            //хебрев стихи
+          
+
             res.render('partials/versepage', {
+                paralels : row,//стихи синодального толка
                 hebrews: versus_hebrew,
                 books: books,
                 globalsearchText: globalsearchText,
@@ -75,6 +96,29 @@ app.get('/hbook/:number/:charter', function (req, res, next) {
             }, function (err, html) {
                 res.status(200).send(html);
             });
+        }
+    });
+
+}
+else{
+    
+    res.render('partials/versepage', {
+        paralels:false,
+        hebrews: versus_hebrew,
+        books: books,
+        globalsearchText: globalsearchText,
+        numberBook: number_book,
+        numberBookEng: number_book_eng,
+        numberChapterActive: number_charter_active,
+        numberCharterCount: number_charter_count,
+    }, function (err, html) {
+        res.status(200).send(html);
+
+    });
+
+}
+
+
         }
     });
 
