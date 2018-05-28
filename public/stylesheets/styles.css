@@ -227,7 +227,8 @@
                }
 
                .navbars {
-                   display: list-item;
+                padding-top: 10px;
+                display: flex;
                }
 
                .heb-content--verse {

@@ -31,7 +31,6 @@
         	 */
         	$("#c_hebrew").on("change", "#paralels", function () {
 				gparalels = $(this).val();
-				debugger
         			window.location.href = "#book/" + gbook + "/" + gchapter + "?jn_paralels=" + gparalels;
         	});
 
@@ -86,38 +85,25 @@
 
         		if (text == "") return;
         		jsPanel.create({
-        			position: {
-        				my: "center-top",
-        				at: "center-top",
-        				offsetY: 15
-        			},
-        			theme: "rebeccapurple",
-        			contentSize: {
-        				width: 600,
-        				height: 350
-        			},
+        			position:    'center-top 0 80',
+    				contentSize: '450 250',
+        			theme: "primary",
+        			
         			headerTitle: "Поиск слова: " + text,
-        			//contentAjax: $.get('/search/' + text),
         			contentAjax: {
         				url: '/search/' + text + jn_curr + jn_strong_verse + jn_better_find,
-
         				autoload: true,
-        				done: function (data, textStatus, jqXHR, panel) {
-        					var cont = this.content.append(data);
-
+        				done: function (panel) {
+							var cont = $(this.responseText);
         					cont.unmark({
         						done: function () {
-        							cont.mark(text);
+									cont.mark(text);
+									panel.content.innerHTML = cont[0].innerHTML;
         						}
         					});
 
         				},
         			},
-
-        			callback: function () {
-
-
-        			}
         		});
         	});
 
