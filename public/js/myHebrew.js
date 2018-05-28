@@ -85,7 +85,7 @@
         		}
 
         		if (text == "") return;
-        		$.jsPanel({
+        		jsPanel.create({
         			position: {
         				my: "center-top",
         				at: "center-top",
