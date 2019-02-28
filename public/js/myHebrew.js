@@ -10,28 +10,24 @@
         	$("#c_hebrew").on("change", "#book", function () {
         		gbook = $(this).val();
         		gchapter = $("#chapter :selected").val();
-				window.location.href = "#book/" + gbook + "/" + 1 + "?jn_paralels=" + gparalels;
-// 			debugger	
-// 				$.get("#book/" + gbook + "/" + 1, { name: "John", time: "2pm" } )
-//   .done(function( data ) {
-//     alert( "Data Loaded: " + data );
-//   });
+        		window.location.href = "#book/" + gbook + "/" + 1 + "?jn_paralels=" + gparalels;
+
         	});
 
         	/**
         	 * Переход по главе
         	 */
         	$("#c_hebrew").on("change", "#chapter", function () {
-				gchapter = $(this).val();
+        		gchapter = $(this).val();
 
-        			window.location.href = "#book/" + gbook + "/" + gchapter + "?jn_paralels=" + gparalels;
+        		window.location.href = "#book/" + gbook + "/" + gchapter + "?jn_paralels=" + gparalels;
         	});
         	/**
         	 * Переход с учетом паралельного перевода
         	 */
         	$("#c_hebrew").on("change", "#paralels", function () {
-				gparalels = $(this).val();
-        			window.location.href = "#book/" + gbook + "/" + gchapter + "?jn_paralels=" + gparalels;
+        		gparalels = $(this).val();
+        		window.location.href = "#book/" + gbook + "/" + gchapter + "?jn_paralels=" + gparalels;
         	});
 
         	/**
@@ -85,20 +81,20 @@
 
         		if (text == "") return;
         		jsPanel.create({
-        			position:    'center-top 0 80',
-    				contentSize: '450 250',
+        			position: 'center-top 0 80',
+        			contentSize: '450 250',
         			theme: "primary",
-        			
+
         			headerTitle: "Поиск слова: " + text,
         			contentAjax: {
         				url: '/search/' + text + jn_curr + jn_strong_verse + jn_better_find,
         				autoload: true,
         				done: function (panel) {
-							var cont = $(this.responseText);
+        					var cont = $(this.responseText);
         					cont.unmark({
         						done: function () {
-									cont.mark(text);
-									panel.content.innerHTML = cont[0].innerHTML;
+        							cont.mark(text);
+        							panel.content.innerHTML = cont[0].innerHTML;
         						}
         					});
 
@@ -107,26 +103,42 @@
         		});
         	});
 
-        	$('.hebrew-container').on("click focus", '.rus', (function () {
-        		if ($(this).hasClass("inputized") == false) {
-        			$(this).inputizer(function (value) {
-        				var id_data_verse = $(this).parent('.unit').data();
-        				//var verse_rus = $(this);
+        	$(document).ready(function () {
+				debugger
+        		$('#c_hebrew .rus').editable({
+        			type: 'text',
+        			name: 'username',
+        			url: '/post',
+        			title: 'Enter username'
+        		});
+        	});
+        	//ajax emulation
+        	// $.mockjax({
+        	// 	url: '/post',
+        	// 	responseTime: 200
+        	// }); 
 
-        				$.post('/update_rus_verse/', {
-        						id: id_data_verse.id,
-        						rus: value
-        					}).done(function (data) {
-        						console.log("done", data);
-        					}).fail(function (err) {
-        						console.log("fail", err);
-        					})
-        					.always(function (mm) {
-        						console.log("always", mm);
-        					})
 
-        			})
-        		}
-        	}));
+        	// $('.hebrew-container').on("click focus", '.rus', (function () {
+        	// 	if ($(this).hasClass("inputized") == false) {
+        	// 		$(this).inputizer(function (value) {
+        	// 			var id_data_verse = $(this).parent('.unit').data();
+        	// 			//var verse_rus = $(this);
+
+        	// 			$.post('/update_rus_verse/', {
+        	// 					id: id_data_verse.id,
+        	// 					rus: value
+        	// 				}).done(function (data) {
+        	// 					console.log("done", data);
+        	// 				}).fail(function (err) {
+        	// 					console.log("fail", err);
+        	// 				})
+        	// 				.always(function (mm) {
+        	// 					console.log("always", mm);
+        	// 				})
+
+        	// 		})
+        	// 	}
+        	// }));
 
         });
