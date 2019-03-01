@@ -57,66 +57,64 @@ app.get('/hbook/:number/:charter', function (req, res, next) {
         if (err !== null) {
             next(err);
         } else {
-          
-          
+
+
             var versus_hebrew = bdHebrew.verseBuild(row);
             for (var key = 0, l = books.length; key < l; key++) {
                 if (books[key].short_name2 == number_book) {
                     number_book = books[key].rus;
                     number_charter_count = books[key].ch;
                     num_book = books[key].book_number;
-                    
+
                     break;
                 }
             }
 
-if (isParalels == "syn" || isParalels == undefined)
-{
+            if (isParalels == "syn" || isParalels == undefined) {
 
-    RST.all("SELECT  chapter, verse, text   FROM verses WHERE book_number=? AND chapter=?", [num_book, number_charter_active], function (err, row) {
+                RST.all("SELECT  chapter, verse, text   FROM verses WHERE book_number=? AND chapter=?", [num_book, number_charter_active], function (err, row) {
 
-        if (err !== null) {
-            next(err);
-        } else {
+                    if (err !== null) {
+                        next(err);
+                    } else {
 
-            row;
-            versus_hebrew;
-            //хебрев стихи
-          
+                        row;
+                        versus_hebrew;
+                        //хебрев стихи
 
-            res.render('partials/versepage', {
-                paralels : row,//стихи синодального толка
-                hebrews: versus_hebrew,
-                books: books,
-                globalsearchText: globalsearchText,
-                numberBook: number_book,
-                numberBookEng: number_book_eng,
-                numberChapterActive: number_charter_active,
-                numberCharterCount: number_charter_count,
-            }, function (err, html) {
-                res.status(200).send(html);
-            });
-        }
-    });
 
-}
-else{
-    
-    res.render('partials/versepage', {
-        paralels:false,
-        hebrews: versus_hebrew,
-        books: books,
-        globalsearchText: globalsearchText,
-        numberBook: number_book,
-        numberBookEng: number_book_eng,
-        numberChapterActive: number_charter_active,
-        numberCharterCount: number_charter_count,
-    }, function (err, html) {
-        res.status(200).send(html);
+                        res.render('partials/versepage', {
+                            paralels: row, //стихи синодального толка
+                            hebrews: versus_hebrew,
+                            books: books,
+                            globalsearchText: globalsearchText,
+                            numberBook: number_book,
+                            numberBookEng: number_book_eng,
+                            numberChapterActive: number_charter_active,
+                            numberCharterCount: number_charter_count,
+                        }, function (err, html) {
+                            res.status(200).send(html);
+                        });
+                    }
+                });
 
-    });
+            } else {
 
-}
+                res.render('partials/versepage', {
+                    paralels: false,
+                    hebrews: versus_hebrew,
+                    books: books,
+                    globalsearchText: globalsearchText,
+                    numberBook: number_book,
+                    numberBookEng: number_book_eng,
+                    numberChapterActive: number_charter_active,
+                    numberCharterCount: number_charter_count,
+                }, function (err, html) {
+                    res.status(200).send(html);
+
+                });
+
+            }
 
 
         }
@@ -131,7 +129,7 @@ app.get('/morph_def/:id_word', function (req, res) {
     var idWord = req.params["id_word"];
     db.all("SELECT morph FROM verse WHERE verse.word_ID=?", idWord, function (err, row) {
 
-        
+
         if (err !== null) {
             next(err);
         } else {
@@ -181,13 +179,13 @@ app.get('/search/:searchText', function (req, res) {
     var searchText = globalsearchText = req.params["searchText"];
 
     var query = undefined;
-    
+
     //Проверяем пользователь вводил поиск по номерам стронга?
     let isStrong = searchText.match(/H\d{1,4}/g);
     let subQuery = "";
-   
+
     var s_currBook = ""; //по текущей книге
-    var isStronginVerseView ="";
+    var isStronginVerseView = "";
     // будет ли запрос с условием книги?
     if (req.query.hasOwnProperty("currbook")) {
         s_currBook = 'verse.Book="' + req.query.currbook + '" AND ';
@@ -196,26 +194,25 @@ app.get('/search/:searchText', function (req, res) {
     // условие для отображение стронга
     if (req.query.hasOwnProperty("jn_strong_verse")) {
         isStronginVerseView = ' GROUP_CONCAT(verse.gloss_Rus ||" "|| verse.st_strong,\" \") ';
-    } else{
+    } else {
         isStronginVerseView = ' GROUP_CONCAT(verse.gloss_Rus, \" \") ';
 
     }
 
-    var quertyBetter ="";
+    var quertyBetter = "";
     // Поиск по стронгу?
     if (isStrong == null) {
-        if(req.query.hasOwnProperty("jn_better_find")){
+        if (req.query.hasOwnProperty("jn_better_find")) {
             quertyBetter = "'" + searchText + "'";
-        }
-        else{
-            
-            quertyBetter = "'%" + searchText + "%'" ;
-        }
-        
+        } else {
 
-        query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS,  "+isStronginVerseView+" as find  FROM verse,  (SELECT * FROM verse  WHERE gloss_Rus LIKE " + quertyBetter + "  GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE " + s_currBook + " verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
+            quertyBetter = "'%" + searchText + "%'";
+        }
+
+
+        query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS,  " + isStronginVerseView + " as find  FROM verse,  (SELECT * FROM verse  WHERE gloss_Rus LIKE " + quertyBetter + "  GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE " + s_currBook + " verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
     } else {
-        query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS, verse.gloss_Rus,  "+isStronginVerseView+" as find   FROM verse,  (SELECT * FROM verse  WHERE st_strong LIKE '" + searchText + "'  GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE " + s_currBook + " verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
+        query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS, verse.gloss_Rus,  " + isStronginVerseView + " as find   FROM verse,  (SELECT * FROM verse  WHERE st_strong LIKE '" + searchText + "'  GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE " + s_currBook + " verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
         //query = "SELECT verse.Book, verse.ch_BHS, verse.v_BHS,  GROUP_CONCAT(verse.gloss_Rus, \" \") as find  FROM verse,  (SELECT * FROM verse  WHERE st_strong LIKE '"+searchText+"'   GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY _rowid_ ASC  ) AS CC WHERE  verse.Book == CC.Book AND verse.ch_BHS == CC.ch_BHS AND verse.v_BHS == CC.v_BHS AND verse.st_strong == CC.st_strong GROUP BY verse.Book, verse.ch_BHS, verse.v_BHS ORDER BY verse.word_ID";
     }
     //console.log(dateTime.match(/H\d{1,4}/g));

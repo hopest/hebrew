@@ -227,7 +227,8 @@
                }
 
                .navbars {
-                   display: list-item;
+                   padding-top: 10px;
+                   display: flex;
                }
 
                .heb-content--verse {
@@ -237,11 +238,11 @@
                    align-items: center;
                }
 
-               .heb-content--verse s{
-                text-decoration: dashed;
-                vertical-align: super;
-                font-size: 80%;
-                padding-right: 5px;
-                padding-left: 2px;
-                color: #02adc3;
+               .heb-content--verse s {
+                   text-decoration: dashed;
+                   vertical-align: super;
+                   font-size: 80%;
+                   padding-right: 5px;
+                   padding-left: 2px;
+                   color: #02adc3;
                }
