@@ -1,8 +1,0 @@
-<div class='dlgFindText'>
- <% dlg_find.forEach(function(bible) { %>
-        <div class='verse'>
-         <a class="topic" href="#book/<%-  bible.Book %>/<%-  bible.ch_BHS %>?hf=<%-  bible.v_BHS %>"><%-  bible.Book %>. <%-  bible.ch_BHS %>:<%=  bible.v_BHS -%></a>
-<span class="pronun"><%=  bible.find -%></span>
-        </div>
-         <% }); %>
-<div>
