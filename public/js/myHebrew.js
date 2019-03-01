@@ -1,6 +1,4 @@
         $(function () {
-
-
         	var gbook = "Gen",
         		gchapter = 1,
         		gparalels = "no";
@@ -103,15 +101,7 @@
         		});
         	});
 
-        	$(document).ready(function () {
-				debugger
-        		$('#c_hebrew .rus').editable({
-        			type: 'text',
-        			name: 'username',
-        			url: '/post',
-        			title: 'Enter username'
-        		});
-        	});
+        	
         	//ajax emulation
         	// $.mockjax({
         	// 	url: '/post',
